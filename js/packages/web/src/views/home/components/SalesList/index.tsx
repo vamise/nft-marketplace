@@ -32,7 +32,7 @@ export const SalesListView = () => {
       <Banner
         src="/main-banner.png"
         headingText="Distributed Marketplace"
-        subHeadingText="Confidently launch “non-fungible tokens” collection using NFT Marketplace."
+        subHeadingText="Confidently launch NFT collection using our marketplace."
         actionComponent={<HowToBuyModal buttonClassName="secondary-btn" />}
         useBannerBg
       />
