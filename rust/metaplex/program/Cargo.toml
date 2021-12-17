@@ -2,7 +2,7 @@
 name = "metaplex"
 version = "0.0.1"
 description = "Metaplex"
-authors = ["Metaplex Maintainers <maintainers@metaplex.com>"]
+authors = ["Fyfy.io Maintainers <maintainers@fyfy.io>"]
 repository = "https://github.com/vamise/nft-marketplace"
 license = "Apache-2.0"
 edition = "2018"

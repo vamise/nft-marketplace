@@ -1,5 +1,5 @@
 ---
-title: Metaplex
+title: NFT Marketplace
 ---
 
 ## Background
@@ -12,7 +12,7 @@ document are available at:
 
 ## Source
 
-The Metaplex Program's source is available on
+The NFT Marketplace Program's source is available on
 [github](https://github.com/vamise/nft-marketplace)
 
 There is also an example Rust client located at

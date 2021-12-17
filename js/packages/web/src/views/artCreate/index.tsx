@@ -1279,7 +1279,7 @@ const Congrats = (props: {
 
   const newTweetURL = () => {
     const params = {
-      text: "I've created a new NFT artwork on Metaplex, check it out!",
+      text: "I've created a new NFT artwork on marketplace, check it out!",
       url: `${
         window.location.origin
       }/#/art/${props.nft?.metadataAccount.toString()}`,

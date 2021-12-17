@@ -303,7 +303,7 @@ pub enum MetaplexInstruction {
     ///   0. `[writable]` The accept payment account on the auction manager
     ///   1. `[writable]` The destination account of same mint type as the accept payment account. Must be an Associated Token Account.
     ///   2. `[writable]` Auction manager
-    ///   3. `[writable]` Payout ticket info to keep track of this artist or auctioneer's payment, pda of [metaplex, auction manager, winning config index OR 'participation', safety deposit key]
+    ///   3. `[writable]` Payout ticket info to keep track of this artist or auctioneer's payment, pda of [FYFY.IO NFT marketplace, auction manager, winning config index OR 'participation', safety deposit key]
     ///   4. `[signer]` payer
     ///   5. `[]` The metadata
     ///   6. `[]` The master edition of the metadata (optional if exists)
