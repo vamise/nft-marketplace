@@ -1,10 +1,12 @@
-# Metaplex Developer Guide
+# NFT Marketplace Developer Guide
 
 # Architecture
 
 ## Overview
 
-Metaplex is actually not a single contract, but a contract ecosystem, consisting of four contracts that interact with one another. Only one of the contracts (Metaplex) actually knows about the other three, while the others represent primitives in the ecosystem and do not interact with each other at all. First, we'll go over what each contract does at a glance, and then we'll cover the full life cycle of a token becoming an NFT and getting auctioned to see the ecosystem in action. Following that will be modules for each contract.
+NFT Marketplace
+ is actually not a single contract, but a contract ecosystem, consisting of four contracts that interact with one another. Only one of the contracts (NFT Marketplace
+ ) actually knows about the other three, while the others represent primitives in the ecosystem and do not interact with each other at all. First, we'll go over what each contract does at a glance, and then we'll cover the full life cycle of a token becoming an NFT and getting auctioned to see the ecosystem in action. Following that will be modules for each contract.
 
 ## The Contracts
 
@@ -14,7 +16,7 @@ This is the bedrock contract of the entire ecosystem. All that you need to inter
 
 Furthermore, if your mint has one token in its supply, you can give it an additional decoration PDA, of type MasterEdition. This PDA denotes the mint as a special type of object that can mint other mints - which we call Editions (as opposed to MasterEditions because they can't print other mints themselves). This makes this mint like the "master records" that record studios used to use to make new copies of records back in the day. The MasterEdition PDA will take away minting and freezing authority from you in the process and will contain information about total supply, maximum possible supply, etc.
 
-The existence of Metadata and its sister PDA MasterEdition makes a very powerful combination for a mint that enables the entire rest of the Metaplex contract stack. Now you can create:
+The existence of Metadata and its sister PDA MasterEdition makes a very powerful combination for a mint that enables the entire rest of the NFT Marketplace contract stack. Now you can create:
 
 - Normal mints that just have names (Metadata but no MasterEdition)
 - One of a kind NFTs (Metadata + MasterEdition with `max_supply` of 0)
@@ -27,7 +29,7 @@ You can also easily transfer ownership of these PDA records with the `updateAuth
 
 Token Vault acts like a corporation or safe escrow for arbitrary token allotments. You can create a vault object, and insert any number of tokens from any number of mints into safety deposit boxes, and then activate the vault. It has a few different states, but the important ones are **Activated**, which is when it's locked and nobody can access its contents, and **Combined,** when the vault has essentially been opened and the vault authority can withdraw the contents.
 
-Going from **Activated** to **Combined** has only one restraint - that there are no outstanding fractional shares in circulation. You can in principle go straight from **Activated** to **Combined** immediately if you issue 0 fractional shares (which is what the Metaplex front-end contract does during Auction creation).
+Going from **Activated** to **Combined** has only one restraint - that there are no outstanding fractional shares in circulation. You can in principle go straight from **Activated** to **Combined** immediately if you issue 0 fractional shares (which is what the NFT Marketplace front-end contract does during Auction creation).
 
 Once the vault is **Activated**, you can then mint treasury shares that represent fractional ownership of the tokens inside the vault. The treasury shares are valued based on an external price indicator account that does not need to be owned by the vault and is considered the vault's price oracle, and these shares can then be sold on a dex or in an AMM or whatever you desire. This allows you, as the vault owner, to take your NFT(s) and turn them into a sort of corporation and sell partial ownership to other parties. If the external price oracle has its price driven by a proper third party such as a dex or other price discovery mechanism, then the entire system is balanced.
 
@@ -35,13 +37,13 @@ When there are outstanding shares, you cannot, as the vault owner, **Combine** t
 
 ### Auction
 
-The Auction Contract represents an auction primitive, and it knows nothing about NFTs, or Metadata, or anything else in the Metaplex ecosystem. All it cares about is that it has a resource address, it has auction mechanics, and it is using those auction mechanics to auction off that resource. It currently supports English Auctions and Open Edition Auctions (no winners but bids are tracked.) Its only purpose is to track who won what place in an auction and to collect money for those wins. When you place bids, or cancel them, you are interacting with this contract. However, when you redeem bids, you are not interacting with this contract, but Metaplex, because while it can provide proof that you did indeed win 4th place, it has no opinion on how the resource being auctioned off is divvied up between 1st, 2nd, 3rd, and 4th place winners, for example.
+The Auction Contract represents an auction primitive, and it knows nothing about NFTs, or Metadata, or anything else in the Fyfy NFT Marketplace ecosystem. All it cares about is that it has a resource address, it has auction mechanics, and it is using those auction mechanics to auction off that resource. It currently supports English Auctions and Open Edition Auctions (no winners but bids are tracked.) Its only purpose is to track who won what place in an auction and to collect money for those wins. When you place bids, or cancel them, you are interacting with this contract. However, when you redeem bids, you are not interacting with this contract, but NFT Marketplace, because while it can provide proof that you did indeed win 4th place, it has no opinion on how the resource being auctioned off is divvied up between 1st, 2nd, 3rd, and 4th place winners, for example.
 
-This contract will be expanded in the future to include other auction types, and better guarantees between that the auctioneer claiming the bid actually has provided the prize by having the winner sign a PDA saying that they received the prize. Right now this primitive contract should *not* be used in isolation, but in companionship with another contract (like Metaplex in our case) that makes such guarantees that prizes are delivered if prizes are won.
+This contract will be expanded in the future to include other auction types, and better guarantees between that the auctioneer claiming the bid actually has provided the prize by having the winner sign a PDA saying that they received the prize. Right now this primitive contract should *not* be used in isolation, but in companionship with another contract (like NFT Marketplace in our case) that makes such guarantees that prizes are delivered if prizes are won.
 
-### Metaplex
+### NFT Marketplace
 
-This is the granddaddy contract of them all. The primary product of the Metaplex contract are AuctionManagers, and they are the nexus of the other three contract's structs. The purpose of an AuctionManager is to understand that an Auction object is auctioning off the contents of a Vault, and that the contents of a Vault are different types of NFT arrangements, such as:
+This is the granddaddy contract of them all. The primary product of the Fyfy NFT Marketplace contract are AuctionManagers, and they are the nexus of the other three contract's structs. The purpose of an AuctionManager is to understand that an Auction object is auctioning off the contents of a Vault, and that the contents of a Vault are different types of NFT arrangements, such as:
 
 - Limited Edition Prints (Printing a new child edition from limited supply)
 - Open Edition Prints (Printing a new child edition from unlimited supply)
@@ -50,7 +52,7 @@ This is the granddaddy contract of them all. The primary product of the Metaplex
 
 It orchestrates disbursements of those contents to winners of an auction. An AuctionManager requires both a Vault and an Auction to run, and it requires that the Auction's resource key be set to the Vault.
 
-Due to each type of NFT transfer above requiring slightly different nuanced handling and checking, Metaplex handles knowing about those things, and making the different CPI calls to the Token Metadata contract to make those things happen as required during the redemption phase. It also has full authority over all the objects like Vault and Auction, and handles all royalties payments by collecting funds from the auction into its own central escrow account and then disbursing to artists.
+Due to each type of NFT transfer above requiring slightly different nuanced handling and checking, NFT Marketplace handles knowing about those things, and making the different CPI calls to the Token Metadata contract to make those things happen as required during the redemption phase. It also has full authority over all the objects like Vault and Auction, and handles all royalties payments by collecting funds from the auction into its own central escrow account and then disbursing to artists.
 
 ## Basic Single Item Auction End To End
 
@@ -70,15 +72,15 @@ Now that we've gone over the contracts, let's run through an example of how the 
 6. Then we will call the `activate_vault` command which **Activates** the vault, locking everything inside.
 7. We now **Combine** the vault using `combine_vault`, which is to say, we "open it," so the current authority could if they wanted withdraw the tokens inside it. The Auction Manager can only work with vaults in this state, which is why we have to go through the **Activation** phase to get here even though it seems a little nonsensical. See the in depth guide for more color on why these different states exist.
 8. Next up, we create the auction, and we say its resource is this vault. The auction has not yet been started, but it has the right resource (the vault). We do this via the `create_auction` command on the Auction contract.
-9. Now that we have an auction and a vault, we can go and call the `init_auction_manager` endpoint on the Metaplex contract with both of these accounts among a few others to create an AuctionManager, which ties them both together. Note that `init_auction_manager` takes a special struct called AuctionManagerSettings that allows one to specify how many winners there are and what winners get which items from which safety deposit box. At this point, we can't yet start the auction. The AuctionManager is in an invalidated state and we need to validate it by validating that the safety deposit boxes we provided to it in the vault are actually what we said are in them when we provided the AuctionManager with it's settings struct.
+9. Now that we have an auction and a vault, we can go and call the `init_auction_manager` endpoint on the NFT Marketplace contract with both of these accounts among a few others to create an AuctionManager, which ties them both together. Note that `init_auction_manager` takes a special struct called AuctionManagerSettings that allows one to specify how many winners there are and what winners get which items from which safety deposit box. At this point, we can't yet start the auction. The AuctionManager is in an invalidated state and we need to validate it by validating that the safety deposit boxes we provided to it in the vault are actually what we said are in them when we provided the AuctionManager with it's settings struct.
 10. Before we begin validation, we call `set_authority` on both the vault and auction to change its authority to the auction manager, so that it has control over both of those structs. This is a requirement for the validation phase and the rest of the contract lifecycle. **Now you no longer have control over your items.**
-11. We call the `validate_safety_deposit_box` endpoint on the Metaplex contract with the one safety deposit box in the vault, and the logic in this endpoint checks that there are exactly 3 printing tokens from the right mint in this box, matching the 3 printing tokens we promised it would have in our AuctionManagerSettings. Once we do this, and because this is the only safety deposit box in the vault, the AuctionManager is now validated.
-12. We now call `start_auction` on the Metaplex contract, which, because the AuctionManager has authority over the Auction, calls `start_auction` on the Auction contract, and the auction begins!
+11. We call the `validate_safety_deposit_box` endpoint on the NFT Marketplace contract with the one safety deposit box in the vault, and the logic in this endpoint checks that there are exactly 3 printing tokens from the right mint in this box, matching the 3 printing tokens we promised it would have in our AuctionManagerSettings. Once we do this, and because this is the only safety deposit box in the vault, the AuctionManager is now validated.
+12. We now call `start_auction` on the NFT Marketplace contract, which, because the AuctionManager has authority over the Auction, calls `start_auction` on the Auction contract, and the auction begins!
 13. Users can go and call `place_bid` on the Auction contract to place bids. When they do this, tokens of the `token_mint` type used by the auction are taken from the account they provide, tied to their main wallet, and stored in bidder pot accounts in the auction contract.
 14. In order to update a bid, a user must first cancel the original bid, and then place a new bid.
 15. Once the auction is over, a user can refund their bid if they did not win by calling `cancel_bid` again. Winners of the auction cannot cancel their bids.
-16. The winner of a bid creates a mint with decimals 0, a token account with 1 token in it, and calls the `redeem_printing_v2_bid` endpoint on the Metaplex contract, all in a single transaction. This token is now *officially* a Limited Edition of the "Bob's Cool NFT" Master Edition NFT!
-17. You, the auctioneer, visits /#/auction/id/billing and hit the settle button. This first iterates over all three bidders and for each wallet used, calls `claim_bid` on the Metaplex contract, which proxy-calls a `claim_bid` on the Auction contract, telling it to dump the winner's payment into an escrow account called `accept_payment` on the AuctionManager struct. It has the same token type as the auction. Once all payments have been collected, the front end then calls the `empty_payment_account` endpoint one time (since you are the only creator on the Metadata being sold) and the funds in this escrow are paid out to a token account provided of the same type owned by you.
+16. The winner of a bid creates a mint with decimals 0, a token account with 1 token in it, and calls the `redeem_printing_v2_bid` endpoint on the NFT Marketplace contract, all in a single transaction. This token is now *officially* a Limited Edition of the "Bob's Cool NFT" Master Edition NFT!
+17. You, the auctioneer, visits /#/auction/id/billing and hit the settle button. This first iterates over all three bidders and for each wallet used, calls `claim_bid` on the NFT Marketplace contract, which proxy-calls a `claim_bid` on the Auction contract, telling it to dump the winner's payment into an escrow account called `accept_payment` on the AuctionManager struct. It has the same token type as the auction. Once all payments have been collected, the front end then calls the `empty_payment_account` endpoint one time (since you are the only creator on the Metadata being sold) and the funds in this escrow are paid out to a token account provided of the same type owned by you.
 
     Note that our front end reference implementation uses SOL as the "token type." This has some special caveats, namely that SOL isn't really an "spl token." It instead has a work-around called the "Wrapped SOL mint." This is a special mint that is often used in a transient account. What this means is that when we place a bid, we actually make a one-off system account, transfer lamports to it of your bid amount + rent, then label it an spl-token account of the wrapped sol type, use it to place the bid, then close it all in one transaction.
 
@@ -178,7 +180,7 @@ pub struct EditionMarker {
 
 ```
 
-The instruction set for the token metadata contract can be found here: https://github.com/metaplex-foundation/metaplex/blob/master/rust/token-metadata/program/src/instruction.rs
+The instruction set for the token metadata contract can be found here: https://github.com/vamise/nft-marketplace/blob/master/rust/token-metadata/program/src/instruction.rs
 
 ### Types
 
@@ -186,7 +188,7 @@ The instruction set for the token metadata contract can be found here: https://g
 
 This object can be used to provide basic info about SPL tokens on Solana, which include the name, symbol, URI and seller fees, as well as whether or not the sale of this metadata has happened yet. Anybody carrying a token from this mint can mark this primary sale as having happened via the `update_primary_sale_happened_via_token` command. There is obviously no incentive for a primary owner to do this as it precludes them from getting full royalties on the first sale, but a secondary owner must do this if they ever want to see fees from selling!
 
-Metadata accounts are simply PDA addresses with derived key of `['metaplex', metaplex_program_id, mint_id]`.
+Metadata accounts are simply PDA addresses with derived key of `['nft-marketplace', metaplex_program_id, mint_id]`.
 
 ### Master Edition
 
@@ -194,7 +196,7 @@ In addition to simple metadata, a Master Edition object can be created. Master E
 
 The creator can set the maximum supply of the master edition just like a regular mint on Solana, with the main difference being that each print is a numbered edition created from it. To mint a new limited edition, this master edition token must be presented, along with a new mint + token, to the `mint_new_edition_from_master_edition_via_token` endpoint.
 
-Master Edition accounts are PDA addresses of `['metaplex', metaplex_program_id, mint_id, 'edition']`.
+Master Edition accounts are PDA addresses of `['nft-marketplace', metaplex_program_id, mint_id, 'edition']`.
 
 ### Edition
 
@@ -202,7 +204,7 @@ An edition represents a copy of an NFT, and is created from a Master Edition. Ea
 
 Editions are created by presenting the Master Edition token, along with a new mint that lacks a Metadata account and a token account containing one token from that mint to the `mint_new_edition_from_master_edition_via_token` endpoint. This endpoint will create both an immutable Metadata based on the parent Metadata and a special Edition struct based on the parent Master Edition struct.
 
-The Edition has the same PDA as a Master Edition to force collision and prevent a user from having a mint with both, `['metaplex', metaplex_program_id, mint_id, 'edition']`.
+The Edition has the same PDA as a Master Edition to force collision and prevent a user from having a mint with both, `['nft-marketplace', metaplex_program_id, mint_id, 'edition']`.
 
 ## Concepts
 
@@ -220,7 +222,7 @@ During the first sale, creators share in 100% of the proceeds, while in follow u
 
 ### URI JSON Schema
 
-The URI resource is compatible with [ERC-1155 JSON Schema](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema) in order to easily port NFTs across different chains using the wormhole bridge.  You can see how we build this in our reference implementation here: [https://github.com/metaplex-foundation/metaplex/blob/master/js/packages/web/src/actions/nft.tsx#L66](https://github.com/metaplex-foundation/metaplex/blob/master/js/packages/web/src/actions/nft.tsx#L66)
+The URI resource is compatible with [ERC-1155 JSON Schema](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema) in order to easily port NFTs across different chains using the wormhole bridge.  You can see how we build this in our reference implementation here: [https://github.com/vamise/nft-marketplace/blob/master/js/packages/web/src/actions/nft.tsx#L66](https://github.com/vamise/nft-marketplace/blob/master/js/packages/web/src/actions/nft.tsx#L66)
 
 ```jsx
 {
@@ -352,7 +354,7 @@ pub struct ExternalPriceAccount {
 
 ```
 
-The instruction set for the vault can be found here: [https://github.com/metaplex-foundation/metaplex/blob/master/rust/token-vault/program/src/instruction.rs](https://github.com/metaplex-foundation/metaplex/blob/master/rust/token-vault/program/src/instruction.rs)
+The instruction set for the vault can be found here: [https://github.com/vamise/nft-marketplace/blob/master/rust/token-vault/program/src/instruction.rs](https://github.com/vamise/nft-marketplace/blob/master/rust/token-vault/program/src/instruction.rs)
 
 ### Types
 
@@ -523,7 +525,7 @@ pub struct BidderPot {
 
 ```
 
-The instruction set for auction can be found here: [https://github.com/metaplex-foundation/metaplex/blob/master/rust/auction/program/src/instruction.rs](https://github.com/metaplex-foundation/metaplex/blob/master/rust/token-vault/program/src/instruction.rs)
+The instruction set for auction can be found here: [https://github.com/vamise/nft-marketplace/blob/master/rust/auction/program/src/instruction.rs](https://github.com/vamise/nft-marketplace/blob/master/rust/token-vault/program/src/instruction.rs)
 
 ### Types
 
@@ -856,7 +858,7 @@ pub struct PrizeTrackingTicket {
 }
 ```
 
-The instruction set for metaplex can be found here: [https://github.com/metaplex-foundation/metaplex/blob/master/rust/metaplex/program/src/instruction.rs](https://github.com/metaplex-foundation/metaplex/blob/master/rust/token-vault/program/src/instruction.rs)
+The instruction set for metaplex can be found here: [https://github.com/vamise/nft-marketplace/blob/master/rust/metaplex/program/src/instruction.rs](https://github.com/vamise/nft-marketplace/blob/master/rust/token-vault/program/src/instruction.rs)
 
 ### Types
 
@@ -878,7 +880,7 @@ It contains embedded within it a separate `state` and `settings` struct. It is s
 
 This state is not currently in use as switching to it requires an iteration over prizes to review all items for claimed-ness and this costs CPU that is too precious during the redemption call OR adding new endpoint that is not guaranteed to be called. We will revisit it later to bring it back during a refactoring, for now it is considered a NOOP state.
 
-AuctionManagers always have PDAs of seed `['metaplex', metaplex_program_id, auction_id]` where metaplex_program_id is the id of the Metaplex contract and `auction_id` is the address of the Auction being passed to the AuctionManager.
+AuctionManagers always have PDAs of seed `['nft-marketplace', metaplex_program_id, auction_id]` where metaplex_program_id is the id of the Metaplex contract and `auction_id` is the address of the Auction being passed to the AuctionManager.
 
 ### AuctionManagerSettings
 
@@ -900,7 +902,7 @@ Specifically, for each WinningConfigItem, we need to record at the time of creat
 
 This is created once per bid and keeps track of whether a given bidder has redeemed their main bid and their participation NFT. This is how the Metaplex contract guarantees a given bidder gets something in exchange for their BidderMetadata PDA in the Auction contract.
 
-BidRedemptionTickets always have PDAs of `['metaplex', auction_id, bidder_metadata_key]` where the `auction_id` is the address of the Auction and the `bidder_metadata_key` is the address of the BidderMetadata PDA that the Auction contract produced.
+BidRedemptionTickets always have PDAs of `['nft-marketplace', auction_id, bidder_metadata_key]` where the `auction_id` is the address of the Auction and the `bidder_metadata_key` is the address of the BidderMetadata PDA that the Auction contract produced.
 
 ### PayoutTicket
 
@@ -908,31 +910,31 @@ For each creator, for each metadata(WinningConfigItem), for each winning place(W
 
 For instance, 1st place may have three items with 3 unique metadata won while 2nd place may have 4 metadata from 4 items, every item with a single unique creator. The split of funds in the 1st place is going to be 3 ways, while in 2nd place would be 4 ways. Even if 1st and 2nd place bids are the same, we want two records to reflect the royalties paid from 1st and 2nd place, because they would be different numbers in this case, and we want to preserve history.
 
-PayoutTickets always have PDAs of `['metaplex', auction_manager_id, winning_config_index, winning_config_item_index, creator_index, safety_deposit_key, destination_owner]` where `auction_manager_id` is the address of the AuctionManager account, `winning_config_index` is the 0-based index of the WinningConfig in the AuctionManager settings you paid out in this ticket, `winning_config_item_index` is the 0-based index of the WinningConfigItem in that WinningConfig, `creator_index` is the 0-based creator index in that Metadata's creator array that you paid out for that WinningConfigItem (or 'auctioneer' if paying the auctioneer for this item), `safety_deposit_key` is the address to the safety deposit box for this item, and `destination_owner` is the owner of the destination account where the monies are being sent. Yeah, I know, painful.
+PayoutTickets always have PDAs of `['nft-marketplace', auction_manager_id, winning_config_index, winning_config_item_index, creator_index, safety_deposit_key, destination_owner]` where `auction_manager_id` is the address of the AuctionManager account, `winning_config_index` is the 0-based index of the WinningConfig in the AuctionManager settings you paid out in this ticket, `winning_config_item_index` is the 0-based index of the WinningConfigItem in that WinningConfig, `creator_index` is the 0-based creator index in that Metadata's creator array that you paid out for that WinningConfigItem (or 'auctioneer' if paying the auctioneer for this item), `safety_deposit_key` is the address to the safety deposit box for this item, and `destination_owner` is the owner of the destination account where the monies are being sent. Yeah, I know, painful.
 
 ### Store
 
 Every person who forks the repository to make their own storefront should have a unique store struct that is seeded by their own administrative wallet. These are created and updated by the idempotent `set_store` endpoint. Each store can choose to use it's own token, token-metadata, token-vault and auction programs if it so chooses, though right now we've got a hard check that the token program is actually the global spl-token program. The store also can be either public or private, which determines whether or not AuctionManagers can sell items that have all non-whitelisted creators on them or not. We take a "bouncer-knows-your-friend-and-lets-you-in" approach to selling items in whitelist-only stores - if an item has at least one *verified* Whitelisted Creator, then it can be sold.
 
-Store PDAs are always a PDA seed of `['metaplex', metaplex_program_id, admin_wallet]` where `metaplex_program_id` is the address of the Metaplex contract and `admin_wallet` is the wallet that is administering this store.
+Store PDAs are always a PDA seed of `['nft-marketplace', metaplex_program_id, admin_wallet]` where `metaplex_program_id` is the address of the Metaplex contract and `admin_wallet` is the wallet that is administering this store.
 
 ### WhitelistedCreator
 
 A cousin of the simple Creator struct from the Metadata program, this is a foreign key connector between a creator address and a store. It denotes whether or not this creator is currently active in the store and if they are, allows items from them to be sold in it.
 
-WhitelistedCreator PDAs are always a PDA seed of `['metaplex', metaplex_program_id, store_key, creator_key]` where `metaplex_program_id` is the address of the Metaplex contract, `store_key` is the address of the storefront, and `creator_key` is obviously the address of the creator's wallet you are whitelisting.
+WhitelistedCreator PDAs are always a PDA seed of `['nft-marketplace', metaplex_program_id, store_key, creator_key]` where `metaplex_program_id` is the address of the Metaplex contract, `store_key` is the address of the storefront, and `creator_key` is obviously the address of the creator's wallet you are whitelisting.
 
 ### SafetyDepositValidationTicket
 
 This PDA solely exists to prevent validating a safety deposit box twice, which could present security vulnerabilities. It is created for each safety deposit box when it is presented for validation.
 
-SafetyDepositValidationTickets are always PDAs with seed of `['metaplex', metaplex_program_id, auction_manager_id, safety_deposit_key]`where `metaplex_program_id` is the address of the Metaplex contract, `auction_manager_id` is the address of the AuctionManager, and `safety_deposit_key` is the address of the SafetyDepositBox being validated.
+SafetyDepositValidationTickets are always PDAs with seed of `['nft-marketplace', metaplex_program_id, auction_manager_id, safety_deposit_key]`where `metaplex_program_id` is the address of the Metaplex contract, `auction_manager_id` is the address of the AuctionManager, and `safety_deposit_key` is the address of the SafetyDepositBox being validated.
 
 ### OriginalAuthorityLookup
 
 These are created during FullRightsTransfers. When a FullRightsTransfer is happening, the Metadata `updateAuthority` is shifted from the Auctioneer to the AuctionManager so that it can grant it in turn to the winner, and this record is created to keep track of who the original `updateAuthority` was to return it later if the item is not sold. That functionality (returns) is not implemented as of this writing but will be in the near future.
 
-OriginalAuthorityLookups always have PDAs with seed of `['metaplex', auction_id, metadata_key]` where `auction_id` is the address of the Auction and `metadata_key` is the address of the actual Metadata struct.
+OriginalAuthorityLookups always have PDAs with seed of `['nft-marketplace', auction_id, metadata_key]` where `auction_id` is the address of the Auction and `metadata_key` is the address of the actual Metadata struct.
 
 ### PrizeTrackingTicket
 

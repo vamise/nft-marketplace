@@ -13,6 +13,7 @@ incremented for features.
 
 ### Features
 
+- Add Fyfy color presets and brand
 - Candy Machine now supports GIF, PNG and JPEG
 - Added Token Entangler smart contract and CLI
 - Add update authority command for candy machine

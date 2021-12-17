@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://metaplex.com">
-    <img alt="Metaplex" src="js/packages/web/public/metaplex-logo.svg" style="background: black; padding: 10px" width="250" />
+    <img alt="Metaplex" src="js/packages/web/public/fyfy-logo-dark.svg" style="background: black; padding: 10px" width="250" />
   </a>
 </p>
 
@@ -16,7 +16,7 @@ Metaplex is comprised of two core components: an on-chain program, and a self-ho
 
 Metaplex now follows a release versioning process called semantic versioning. If you are making a new market place, launching a candy machine or any live project that will handle real money, we recommend using a release tag. Using a release tag will ensure that new changes don't break your UI.
 
-https://github.com/metaplex-foundation/metaplex/releases
+https://github.com/vamise/nft-marketplace/releases
 
 ### How to checkout a release
 ```
@@ -46,7 +46,7 @@ https://docs.metaplex.com/
 Clone the repo, and run `yarn start` to deploy.
 
 ```bash
-$ git clone https://github.com/metaplex-foundation/metaplex.git
+$ git clone https://github.com/vamise/nft-marketplace.git
 $ cd metaplex/js
 $ yarn install && yarn bootstrap && yarn build
 $ yarn start
@@ -65,7 +65,7 @@ We have a few channels for contact:
 
 - [Discord](https://discord.gg/metaplex)
 - [@metaplex](https://twitter.com/metaplex) on Twitter
-- [GitHub Issues](https://github.com/metaplex-foundation/metaplex/issues)
+- [GitHub Issues](https://github.com/vamise/nft-marketplace/issues)
 
 # Protocol
 

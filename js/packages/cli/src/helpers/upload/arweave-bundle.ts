@@ -117,7 +117,7 @@ function sizeMB(bytes: number): string {
  * when accessing the transaction.
  * See:
  * - https://github.com/ArweaveTeam/arweave/blob/master/doc/path-manifest-schema.md
- * - https://github.com/metaplex-foundation/metaplex/pull/859#pullrequestreview-805914075
+ * - https://github.com/vamise/nft-marketplace/pull/859#pullrequestreview-805914075
  */
 function createArweavePathManifest(
   imageTxId: string,

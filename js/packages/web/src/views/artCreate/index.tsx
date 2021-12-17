@@ -241,7 +241,7 @@ const CategoryStep = (props: {
       <Row className="call-to-action">
         <h2>Create a new item</h2>
         <p>
-          First time creating on Metaplex?{' '}
+          First time creating on NFT marketplace?{' '}
           <a href="#">Read our creators’ guide.</a>
         </p>
       </Row>
@@ -437,7 +437,7 @@ const UploadStep = (props: {
           {coverArtError ? (
             <Text type="danger">{coverArtError}</Text>
           ) : (
-            <p className="ant-upload-text" style={{ color: '#6d6d6d' }}>
+            <p className="ant-upload-text" style={{ color: '#858585' }}>
               Drag and drop, or click to browse
             </p>
           )}
@@ -474,7 +474,7 @@ const UploadStep = (props: {
             <div className="ant-upload-drag-icon">
               <h3 style={{ fontWeight: 700 }}>Upload your creation</h3>
             </div>
-            <p className="ant-upload-text" style={{ color: '#6d6d6d' }}>
+            <p className="ant-upload-text" style={{ color: '#858585' }}>
               Drag and drop, or click to browse
             </p>
           </Dragger>

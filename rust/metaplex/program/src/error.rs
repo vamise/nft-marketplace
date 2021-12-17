@@ -45,13 +45,13 @@ pub enum MetaplexError {
     #[error("Invalid transfer authority provided")]
     InvalidTransferAuthority,
 
-    /// Vault's authority does not match the expected pda with seed ['metaplex', auction_key]
-    #[error("Vault's authority does not match the expected ['metaplex', auction_key]")]
+    /// Vault's authority does not match the expected pda with seed ['nft-marketplace', auction_key]
+    #[error("Vault's authority does not match the expected ['nft-marketplace', auction_key]")]
     VaultAuthorityMismatch,
 
-    /// Auction's authority does not match the expected pda with seed ['metaplex', auction_key]
+    /// Auction's authority does not match the expected pda with seed ['nft-marketplace', auction_key]
     #[error(
-        "Auction's authority does not match the expected pda with seed ['metaplex', auction_key]"
+        "Auction's authority does not match the expected pda with seed ['nft-marketplace', auction_key]"
     )]
     AuctionAuthorityMismatch,
 
@@ -167,8 +167,8 @@ pub enum MetaplexError {
     #[error("This prize has already been claimed!")]
     PrizeAlreadyClaimed,
 
-    /// The bid redemption key does not match the expected PDA with seed ['metaplex', auction key, bidder metadata key]
-    #[error("The bid redemption key does not match the expected PDA with seed ['metaplex', auction key, bidder metadata key]")]
+    /// The bid redemption key does not match the expected PDA with seed ['nft-marketplace', auction key, bidder metadata key]
+    #[error("The bid redemption key does not match the expected PDA with seed ['nft-marketplace', auction key, bidder metadata key]")]
     BidRedemptionMismatch,
 
     /// This bid has already been redeemed!
@@ -179,8 +179,8 @@ pub enum MetaplexError {
     #[error("Auction has not ended yet!")]
     AuctionHasNotEnded,
 
-    /// The original authority lookup does not match the expected PDA of ['metaplex', auction key, metadata key]
-    #[error("The original authority lookup does not match the expected PDA of ['metaplex', auction key, metadata key]")]
+    /// The original authority lookup does not match the expected PDA of ['nft-marketplace', auction key, metadata key]
+    #[error("The original authority lookup does not match the expected PDA of ['nft-marketplace', auction key, metadata key]")]
     OriginalAuthorityLookupKeyMismatch,
 
     /// The original authority given does not match that on the original authority lookup account!

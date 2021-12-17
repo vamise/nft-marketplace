@@ -7,13 +7,13 @@ Primarily you need to specify your repo in `js/packages/web/package.json` file
 Pay attention to these two lines:
 
 ```json
-"deploy:gh": "yarn export && gh-pages -d ../../build/web --repo https://github.com/metaplex-foundation/metaplex -t true",
+"deploy:gh": "yarn export && gh-pages -d ../../build/web --repo https://github.com/vamise/nft-marketplace -t true",
 "deploy": "cross-env ASSET_PREFIX=/metaplex/ yarn build && yarn deploy:gh",
 ```
 
 There are 2 things to change:
 
-- specify your repo URL instead of `https://github.com/metaplex-foundation/metaplex` (for example, `https://github.com/my-name/my-metaplex`)
+- specify your repo URL instead of `https://github.com/vamise/nft-marketplace` (for example, `https://github.com/my-name/my-metaplex`)
 - set `ASSET_PREFIX` to repo name (for example, `ASSET_PREFIX=/my-metaplex/`)
 
 After that, the lines will look like this:

@@ -55,7 +55,7 @@ export const WalletModal: FC = () => {
       <div
         style={{
           background:
-            "linear-gradient(180deg, #D329FC 0%, #8F6DDE 49.48%, #19E6AD 100%)",
+            "linear-gradient(180deg, #00b1ff 0%, #2c68c7 49.48%, #1b5892 100%)",
           borderRadius: 36,
           width: 50,
           height: 50,
