@@ -4,9 +4,7 @@
 
 ## Overview
 
-NFT Marketplace
- is actually not a single contract, but a contract ecosystem, consisting of four contracts that interact with one another. Only one of the contracts (NFT Marketplace
- ) actually knows about the other three, while the others represent primitives in the ecosystem and do not interact with each other at all. First, we'll go over what each contract does at a glance, and then we'll cover the full life cycle of a token becoming an NFT and getting auctioned to see the ecosystem in action. Following that will be modules for each contract.
+NFT Marketplace is actually not a single contract, but a contract ecosystem, consisting of four contracts that interact with one another. Only one of the contracts (NFT Marketplace) actually knows about the other three, while the others represent primitives in the ecosystem and do not interact with each other at all. First, we'll go over what each contract does at a glance, and then we'll cover the full life cycle of a token becoming an NFT and getting auctioned to see the ecosystem in action. Following that will be modules for each contract.
 
 ## The Contracts
 
@@ -90,7 +88,7 @@ Now that we've gone over the contracts, let's run through an example of how the 
 
 ## Conclusion
 
-Now that you've been given this architectural overview, we'll follow up with specific in-depth break downs of each contract's state and mechanics. Hopefully you've got a better idea now of how they work together. If you have any further questions, you can always reach out to me, j_, on discord, or my twitter handle, @redacted_j. My partner in crime, b_, who helped build this protocol, can also be reached on twitter at @baalazamon. This was his brainchild and I couldn't have done it without him. He's been a good friend and an even better mentor.
+Now that you've been given this architectural overview, we'll follow up with specific in-depth break downs of each contract's state and mechanics. Hopefully you've got a better idea now of how they work together. If you have any further questions, you can always reach out to me, j_, on discord, or my twitter handle, @redacted_j. My partner in crime, b_, who helped build this protocol, can also be reached on twitter at @fyfy-io. This was his brainchild and I couldn't have done it without him. He's been a good friend and an even better mentor.
 
 # Deep Dive
 
