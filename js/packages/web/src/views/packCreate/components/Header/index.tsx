@@ -8,7 +8,7 @@ const Header = ({ step }: HeaderProps) => {
   return (
     <div className="create-pack-header">
       <p className="create-pack-header__title">{title}</p>
-    </div>
+      {extraContent}
   );
 };
 
