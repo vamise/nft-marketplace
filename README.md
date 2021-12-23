@@ -39,7 +39,7 @@ git rebase new_version_branch
 
 If you want to deep dive on the Architecture, you can do so here:
 
-https://docs.nft.fyfy.io/
+https://nft.fyfy.io/docs/
 
 ## Installing
 
