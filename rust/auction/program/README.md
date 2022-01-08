@@ -13,7 +13,7 @@ document are available at:
 ## Source
 
 The Auction Program's source is available on
-[github](https://github.com/vamise/nft-marketplace)
+[github](https://github.com/metaplex-foundation/metaplex)
 
 ## Interface
 

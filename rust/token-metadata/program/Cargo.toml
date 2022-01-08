@@ -1,8 +1,8 @@
 [package]
 name = "metaplex-token-metadata"
 version = "0.0.1"
-description = "Metaplex Metadata"
-authors = ["Fyfy.io Maintainers <maintainers@fyfy.io>"]
+description = "Marketplace Metadata"
+authors = ["NFT Marketplace Maintainers <maintainers@fyfy.io>"]
 repository = "https://github.com/vamise/nft-marketplace"
 license = "Apache-2.0"
 edition = "2018"

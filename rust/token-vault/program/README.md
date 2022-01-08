@@ -13,10 +13,10 @@ document are available at:
 ## Source
 
 The Vault Program's source is available on
-[github](https://github.com/vamise/nft-marketplace)
+[github](https://github.com/metaplex-foundation/metaplex)
 
 There is also an example Rust client located at
-[github](https://github.com/vamise/nft-marketplace/tree/master/token_vault/test/src/main.rs)
+[github](https://github.com/metaplex-foundation/metaplex/tree/master/token_vault/test/src/main.rs)
 that can be perused for learning and built if desired with `cargo build`. It allows testing out a variety of scenarios.
 
 ## Interface

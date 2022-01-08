@@ -90,10 +90,10 @@ pub struct SetStoreIndexArgs {
 pub enum MetaplexInstruction {
     /// Initializes an Auction Manager V1
     ///
-    ///   0. `[writable]` Uninitialized, unallocated auction manager account with pda of ['nft-marketplace', auction_key from auction referenced below]
+    ///   0. `[writable]` Uninitialized, unallocated auction manager account with pda of ['metaplex', auction_key from auction referenced below]
     ///   1. `[]` Combined vault account with authority set to auction manager account (this will be checked)
-    ///           Note in addition that this vault account should have authority set to this program's pda of ['nft-marketplace', auction_key]
-    ///   2. `[]` Auction with auctioned item being set to the vault given and authority set to this program's pda of ['nft-marketplace', auction_key]
+    ///           Note in addition that this vault account should have authority set to this program's pda of ['metaplex', auction_key]
+    ///   2. `[]` Auction with auctioned item being set to the vault given and authority set to this program's pda of ['metaplex', auction_key]
     ///   3. `[]` Authority for the Auction Manager
     ///   4. `[signer]` Payer
     ///   5. `[]` Accept payment account of same token mint as the auction for taking payment for open editions, owner should be auction manager key
@@ -104,12 +104,12 @@ pub enum MetaplexInstruction {
 
     /// Validates that a given safety deposit box has in it contents that match the expected WinningConfig in the auction manager.
     /// A stateful call, this will error out if you call it a second time after validation has occurred.
-    ///   0. `[writable]` Uninitialized Safety deposit validation ticket, pda of seed ['nft-marketplace', program id, auction manager key, safety deposit key]
+    ///   0. `[writable]` Uninitialized Safety deposit validation ticket, pda of seed ['metaplex', program id, auction manager key, safety deposit key]
     ///   1. `[writable]` Auction manager
     ///   2. `[writable]` Metadata account
-    ///   3. `[writable]` Original authority lookup - unallocated uninitialized pda account with seed ['nft-marketplace', auction key, metadata key]
+    ///   3. `[writable]` Original authority lookup - unallocated uninitialized pda account with seed ['metaplex', auction key, metadata key]
     ///                   We will store original authority here to return it later.
-    ///   4. `[]` A whitelisted creator entry for the store of this auction manager pda of ['nft-marketplace', store key, creator key]
+    ///   4. `[]` A whitelisted creator entry for the store of this auction manager pda of ['metaplex', store key, creator key]
     ///   where creator key comes from creator list of metadata, any will do
     ///   5. `[]` The auction manager's store key
     ///   6. `[]` Safety deposit box account
@@ -144,7 +144,7 @@ pub enum MetaplexInstruction {
     ///   1. `[writable]` Safety deposit token storage account
     ///   2. `[writable]` Destination account.
     ///   3. `[writable]` Bid redemption key -
-    ///        Just a PDA with seed ['nft-marketplace', auction_key, bidder_metadata_key] that we will allocate to mark that you redeemed your bid
+    ///        Just a PDA with seed ['metaplex', auction_key, bidder_metadata_key] that we will allocate to mark that you redeemed your bid
     ///   4. `[writable]` Safety deposit box account
     ///   5. `[writable]` Vault account
     ///   6. `[writable]` Fraction mint of the vault
@@ -163,7 +163,7 @@ pub enum MetaplexInstruction {
     ///   18. `[optional/writable]` Master edition (if Printing type of WinningConfig)
     ///   19. `[optional/writable]` Reservation list PDA ['metadata', program id, master edition key, 'reservation', auction manager key]
     ///        relative to token metadata program (if Printing type of WinningConfig)
-    ///   20. `[]` Safety deposit config pda of ['nft-marketplace', program id, auction manager, safety deposit]
+    ///   20. `[]` Safety deposit config pda of ['metaplex', program id, auction manager, safety deposit]
     ///      This account will only get used AND BE REQUIRED in the event this is an AuctionManagerV2
     ///   21. `[]` Auction extended (pda relative to auction of ['auction', program id, vault key, 'extended'])
     RedeemBid,
@@ -181,7 +181,7 @@ pub enum MetaplexInstruction {
     ///   1. `[writable]` Safety deposit token storage account
     ///   2. `[writable]` Destination account.
     ///   3. `[writable]` Bid redemption key -
-    ///        Just a PDA with seed ['nft-marketplace', auction_key, bidder_metadata_key] that we will allocate to mark that you redeemed your bid
+    ///        Just a PDA with seed ['metaplex', auction_key, bidder_metadata_key] that we will allocate to mark that you redeemed your bid
     ///   4. `[writable]` Safety deposit box account
     ///   5. `[writable]` Vault account
     ///   6. `[writable]` Fraction mint of the vault
@@ -202,7 +202,7 @@ pub enum MetaplexInstruction {
     ///             after this transaction. Otherwise this account will be ignored.
     ///   19. `[]` PDA-based Transfer authority to move the tokens from the store to the destination seed ['vault', program_id, vault key]
     ///        but please note that this is a PDA relative to the Token Vault program, with the 'vault' prefix
-    ///   20. `[]` Safety deposit config pda of ['nft-marketplace', program id, auction manager, safety deposit]
+    ///   20. `[]` Safety deposit config pda of ['metaplex', program id, auction manager, safety deposit]
     ///      This account will only get used AND BE REQUIRED in the event this is an AuctionManagerV2
     ///   21. `[]` Auction extended (pda relative to auction of ['auction', program id, vault key, 'extended'])
     RedeemFullRightsTransferBid,
@@ -223,10 +223,10 @@ pub enum MetaplexInstruction {
     ///   1. `[writable]` Safety deposit token storage account
     ///   2. `[writable]` Destination account for limited edition authority token. Must be same mint as master edition Printing mint.
     ///   3. `[writable]` Bid redemption key -
-    ///        Just a PDA with seed ['nft-marketplace', auction_key, bidder_metadata_key] that we will allocate to mark that you redeemed your bid
+    ///        Just a PDA with seed ['metaplex', auction_key, bidder_metadata_key] that we will allocate to mark that you redeemed your bid
     ///   4. `[]` Safety deposit box account
     ///   5. `[]` Vault account
-    ///   6. `[]` Safety deposit config pda of ['nft-marketplace', program id, auction manager, safety deposit]
+    ///   6. `[]` Safety deposit config pda of ['metaplex', program id, auction manager, safety deposit]
     ///      This account will only get used in the event this is an AuctionManagerV2    
     ///   7. `[]` Auction
     ///   8. `[]` Your BidderMetadata account
@@ -303,7 +303,7 @@ pub enum MetaplexInstruction {
     ///   0. `[writable]` The accept payment account on the auction manager
     ///   1. `[writable]` The destination account of same mint type as the accept payment account. Must be an Associated Token Account.
     ///   2. `[writable]` Auction manager
-    ///   3. `[writable]` Payout ticket info to keep track of this artist or auctioneer's payment, pda of [FYFY.IO NFT marketplace, auction manager, winning config index OR 'participation', safety deposit key]
+    ///   3. `[writable]` Payout ticket info to keep track of this artist or auctioneer's payment, pda of [metaplex, auction manager, winning config index OR 'participation', safety deposit key]
     ///   4. `[signer]` payer
     ///   5. `[]` The metadata
     ///   6. `[]` The master edition of the metadata (optional if exists)
@@ -315,14 +315,14 @@ pub enum MetaplexInstruction {
     ///   11. `[]` Token program
     ///   12. `[]` System program
     ///   13. `[]` Rent sysvar
-    ///   14. `[]` AuctionWinnerTokenTypeTracker, pda of seed ['nft-marketplace', program id, auction manager key, 'totals']
-    ///   15. `[]` Safety deposit config pda of ['nft-marketplace', program id, auction manager, safety deposit]
+    ///   14. `[]` AuctionWinnerTokenTypeTracker, pda of seed ['metaplex', program id, auction manager key, 'totals']
+    ///   15. `[]` Safety deposit config pda of ['metaplex', program id, auction manager, safety deposit]
     EmptyPaymentAccount(EmptyPaymentAccountArgs),
 
-    /// Given a signer wallet, create a store with pda ['nft-marketplace', wallet] (if it does not exist) and/or update it
+    /// Given a signer wallet, create a store with pda ['metaplex', wallet] (if it does not exist) and/or update it
     /// (if it already exists). Stores can be set to open (anybody can publish) or closed (publish only via whitelist).
     ///
-    ///   0. `[writable]` The store key, seed of ['nft-marketplace', admin wallet]
+    ///   0. `[writable]` The store key, seed of ['metaplex', admin wallet]
     ///   1. `[signer]`  The admin wallet
     ///   2. `[signer]`  Payer
     ///   3. `[]` Token program
@@ -334,13 +334,13 @@ pub enum MetaplexInstruction {
     SetStore(SetStoreArgs),
 
     /// Given an existing store, add or update an existing whitelisted creator for the store. This creates
-    /// a PDA with seed ['nft-marketplace', store key, creator key] if it does not already exist to store attributes there.
+    /// a PDA with seed ['metaplex', store key, creator key] if it does not already exist to store attributes there.
     ///
-    ///   0. `[writable]` The whitelisted creator pda key, seed of ['nft-marketplace', store key, creator key]
+    ///   0. `[writable]` The whitelisted creator pda key, seed of ['metaplex', store key, creator key]
     ///   1. `[signer]`  The admin wallet
     ///   2. `[signer]`  Payer
     ///   3. `[]` The creator key
-    ///   4. `[]` The store key, seed of ['nft-marketplace', admin wallet]
+    ///   4. `[]` The store key, seed of ['metaplex', admin wallet]
     ///   5. `[]` System
     ///   6. `[]` Rent sysvar
     SetWhitelistedCreator(SetWhitelistedCreatorArgs),
@@ -356,7 +356,7 @@ pub enum MetaplexInstruction {
     ///         be owned by auction manager account.
     ///   4. `[signer]` Authority for the Auction Manager
     ///   5. `[]` A whitelisted creator entry for this store for the open edition
-    ///       pda of ['nft-marketplace', store key, creator key] where creator key comes from creator list of metadata
+    ///       pda of ['metaplex', store key, creator key] where creator key comes from creator list of metadata
     ///   6. `[]` The auction manager's store
     ///   7. `[]` Safety deposit box
     ///   8. `[]` Safety deposit token store
@@ -441,10 +441,10 @@ pub enum MetaplexInstruction {
     ///   2. `[writable]` Account containing 1 token of your new mint type.
     ///   MUST be an associated token account of pda [wallet, token program, mint] relative to ata program.
     ///   3. `[writable]` Bid redemption key -
-    ///        Just a PDA with seed ['nft-marketplace', auction_key, bidder_metadata_key] that we will allocate to mark that you redeemed your bid
+    ///        Just a PDA with seed ['metaplex', auction_key, bidder_metadata_key] that we will allocate to mark that you redeemed your bid
     ///   4. `[writable]` Safety deposit box account
     ///   5. `[writable]` Vault account
-    ///   6. `[]` Safety deposit config pda of ['nft-marketplace', program id, auction manager, safety deposit]
+    ///   6. `[]` Safety deposit config pda of ['metaplex', program id, auction manager, safety deposit]
     ///      This account will only get used in the event this is an AuctionManagerV2
     ///   7. `[]` Auction
     ///   8. `[]` Your BidderMetadata account
@@ -456,7 +456,7 @@ pub enum MetaplexInstruction {
     ///   14. `[]` Store
     ///   15. `[]` System
     ///   16. `[]` Rent sysvar
-    ///   17. `[writable]` Prize tracking ticket (pda of ['nft-marketplace', program id, auction manager key, metadata mint id])
+    ///   17. `[writable]` Prize tracking ticket (pda of ['metaplex', program id, auction manager key, metadata mint id])
     ///   18. `[writable]` New Metadata key (pda of ['metadata', program id, mint id])
     ///   19. `[writable]` New Edition (pda of ['metadata', program id, mint id, 'edition'])
     ///   20. `[writable]` Master Edition of token in vault V2 (pda of ['metadata', program id, master metadata mint id, 'edition']) PDA is relative to token metadata.
@@ -477,7 +477,7 @@ pub enum MetaplexInstruction {
     ///   3. `[writable]` Safety deposit box account
     ///   4. `[writable]` Vault account
     ///   5. `[writable]` Fraction mint of the vault
-    ///   6. `[]` Prize tracking ticket (pda of ['nft-marketplace', program id, auction manager key, metadata mint id])
+    ///   6. `[]` Prize tracking ticket (pda of ['metaplex', program id, auction manager key, metadata mint id])
     ///   7. `[]` PDA-based Vault transfer authority ['vault', program_id, vault key]
     ///        but please note that this is a PDA relative to the Token Vault program, with the 'vault' prefix
     ///   8. `[]` Auction
@@ -486,7 +486,7 @@ pub enum MetaplexInstruction {
     ///   11. `[]` Token Vault program
     ///   12. `[]` Store
     ///   13. `[]` Rent sysvar
-    ///   14. `[]` Safety deposit config pda of ['nft-marketplace', program id, auction manager, safety deposit]
+    ///   14. `[]` Safety deposit config pda of ['metaplex', program id, auction manager, safety deposit]
     ///      This account will only get used in the event this is an AuctionManagerV2
     WithdrawMasterEdition,
 
@@ -510,10 +510,10 @@ pub enum MetaplexInstruction {
     ///   2. `[writable]` Account containing 1 token of your new mint type.
     ///   MUST be an associated token account of pda [wallet, token program, mint] relative to ata program.
     ///   3. `[writable]` Bid redemption key -
-    ///        Just a PDA with seed ['nft-marketplace', auction_key, bidder_metadata_key] that we will allocate to mark that you redeemed your bid
+    ///        Just a PDA with seed ['metaplex', auction_key, bidder_metadata_key] that we will allocate to mark that you redeemed your bid
     ///   4. `[]` Safety deposit box account
     ///   5. `[]` Vault account
-    ///   6. `[writable]` Safety deposit config pda of ['nft-marketplace', program id, auction manager, safety deposit]
+    ///   6. `[writable]` Safety deposit config pda of ['metaplex', program id, auction manager, safety deposit]
     ///      This account will only get used in the event this is an AuctionManagerV2
     ///   7. `[]` Auction
     ///   8. `[]` Your BidderMetadata account
@@ -529,7 +529,7 @@ pub enum MetaplexInstruction {
     ///             on the auction manager to the auction manager account itself.
     ///   18.  `[writable]` The accept payment account for the auction manager
     ///   19.  `[writable]` The token account you will potentially pay for the open edition bid with if necessary.
-    ///   20. `[writable]` Prize tracking ticket (pda of ['nft-marketplace', program id, auction manager key, metadata mint id])
+    ///   20. `[writable]` Prize tracking ticket (pda of ['metaplex', program id, auction manager key, metadata mint id])
     ///   21. `[writable]` New Metadata key (pda of ['metadata', program id, mint id])
     ///   22. `[writable]` New Edition (pda of ['metadata', program id, mint id, 'edition'])
     ///   23. `[writable]` Master Edition of token in vault V2 (pda of ['metadata', program id, master metadata mint id, 'edition']) PDA is relative to token metadata.
@@ -545,11 +545,11 @@ pub enum MetaplexInstruction {
     ///
     /// NOTE: It is not possible to use MasterEditionV1s for participation nfts with these managers.
     ///
-    ///   0. `[writable]` Uninitialized, unallocated auction manager account with pda of ['nft-marketplace', auction_key from auction referenced below]
-    ///   1. `[writable]` AuctionWinnerTokenTypeTracker, pda of seed ['nft-marketplace', program id, auction manager key, 'totals']
+    ///   0. `[writable]` Uninitialized, unallocated auction manager account with pda of ['metaplex', auction_key from auction referenced below]
+    ///   1. `[writable]` AuctionWinnerTokenTypeTracker, pda of seed ['metaplex', program id, auction manager key, 'totals']
     ///   2. `[]` Combined vault account with authority set to auction manager account (this will be checked)
-    ///           Note in addition that this vault account should have authority set to this program's pda of ['nft-marketplace', auction_key]
-    ///   3. `[]` Auction with auctioned item being set to the vault given and authority set to this program's pda of ['nft-marketplace', auction_key]
+    ///           Note in addition that this vault account should have authority set to this program's pda of ['metaplex', auction_key]
+    ///   3. `[]` Auction with auctioned item being set to the vault given and authority set to this program's pda of ['metaplex', auction_key]
     ///   4. `[]` Authority for the Auction Manager
     ///   5. `[signer]` Payer
     ///   6. `[]` Accept payment account of same token mint as the auction for taking payment for open editions, owner should be auction manager key
@@ -562,13 +562,13 @@ pub enum MetaplexInstruction {
     ///
     /// Validates that a given safety deposit box has in it contents that match the given SafetyDepositConfig, and creates said config.
     /// A stateful call, this will error out if you call it a second time after validation has occurred.
-    ///   0. `[writable]` Uninitialized Safety deposit config, pda of seed ['nft-marketplace', program id, auction manager key, safety deposit key]
-    ///   1. `[writable]` AuctionWinnerTokenTypeTracker, pda of seed ['nft-marketplace', program id, auction manager key, 'totals']
+    ///   0. `[writable]` Uninitialized Safety deposit config, pda of seed ['metaplex', program id, auction manager key, safety deposit key]
+    ///   1. `[writable]` AuctionWinnerTokenTypeTracker, pda of seed ['metaplex', program id, auction manager key, 'totals']
     ///   2. `[writable]` Auction manager
     ///   3. `[writable]` Metadata account
-    ///   4. `[writable]` Original authority lookup - unallocated uninitialized pda account with seed ['nft-marketplace', auction key, metadata key]
+    ///   4. `[writable]` Original authority lookup - unallocated uninitialized pda account with seed ['metaplex', auction key, metadata key]
     ///                   We will store original authority here to return it later.
-    ///   5. `[]` A whitelisted creator entry for the store of this auction manager pda of ['nft-marketplace', store key, creator key]
+    ///   5. `[]` A whitelisted creator entry for the store of this auction manager pda of ['metaplex', store key, creator key]
     ///   where creator key comes from creator list of metadata, any will do
     ///   6. `[]` The auction manager's store key
     ///   7. `[]` Safety deposit box account
@@ -607,10 +607,10 @@ pub enum MetaplexInstruction {
     ///   2. `[writable]` Account containing 1 token of your new mint type.
     ///   MUST be an associated token account of pda [wallet, token program, mint] relative to ata program.
     ///   3. `[writable]` Bid redemption key -
-    ///        Just a PDA with seed ['nft-marketplace', auction_key, bidder_metadata_key] that we will allocate to mark that you redeemed your bid
+    ///        Just a PDA with seed ['metaplex', auction_key, bidder_metadata_key] that we will allocate to mark that you redeemed your bid
     ///   4. `[]` Safety deposit box account
     ///   5. `[]` Vault account
-    ///   6. `[writable]` Safety deposit config pda of ['nft-marketplace', program id, auction manager, safety deposit]
+    ///   6. `[writable]` Safety deposit config pda of ['metaplex', program id, auction manager, safety deposit]
     ///      This account will only get used in the event this is an AuctionManagerV2
     ///   7. `[]` Auction
     ///   8. `[]` Your BidderMetadata account
@@ -626,7 +626,7 @@ pub enum MetaplexInstruction {
     ///             on the auction manager to the auction manager account itself.
     ///   18.  `[writable]` The accept payment account for the auction manager
     ///   19.  `[writable]` The token account you will potentially pay for the open edition bid with if necessary.
-    ///   20. `[writable]` Prize tracking ticket (pda of ['nft-marketplace', program id, auction manager key, metadata mint id])
+    ///   20. `[writable]` Prize tracking ticket (pda of ['metaplex', program id, auction manager key, metadata mint id])
     ///   21. `[writable]` New Metadata key (pda of ['metadata', program id, mint id])
     ///   22. `[writable]` New Edition (pda of ['metadata', program id, mint id, 'edition'])
     ///   23. `[writable]` Master Edition of token in vault V2 (pda of ['metadata', program id, master metadata mint id, 'edition']) PDA is relative to token metadata.
@@ -649,19 +649,19 @@ pub enum MetaplexInstruction {
     EndAuction(EndAuctionArgs),
     /// Creates/Updates a store index page
     ///
-    ///   0. `[writable]` Store index (pda of ['nft-marketplace', program id, store key, 'index', page_number])
+    ///   0. `[writable]` Store index (pda of ['metaplex', program id, store key, 'index', page_number])
     ///   1. `[signer]` Payer info
-    ///   2. `[]` Auction cache (pda of ['nft-marketplace', program id, store key, auction key, 'cache'])
+    ///   2. `[]` Auction cache (pda of ['metaplex', program id, store key, auction key, 'cache'])
     ///   3. `[]` Store key
     ///   4. `[]` System
     ///   5. `[]` Rent sysvar
-    ///   7. `[optional]` Auction cache above current (pda of ['nft-marketplace', program id, store key, auction key, 'cache'])
+    ///   7. `[optional]` Auction cache above current (pda of ['metaplex', program id, store key, auction key, 'cache'])
     ///                   Note: Can pass the below in this slot if there is no above
-    ///   8. `[optional]` Auction cache below current (pda of ['nft-marketplace', program id, store key, auction key, 'cache'])
+    ///   8. `[optional]` Auction cache below current (pda of ['metaplex', program id, store key, auction key, 'cache'])
     SetStoreIndex(SetStoreIndexArgs),
     /// Creates/Updates a store index page
     ///
-    ///   0. `[writable]` Auction cache (pda of ['nft-marketplace', program id, store key, auction key, 'cache'])
+    ///   0. `[writable]` Auction cache (pda of ['metaplex', program id, store key, auction key, 'cache'])
     ///   1. `[signer]` Payer info
     ///   2. `[]` Auction
     ///   3. `[]` Safety deposit box account
@@ -672,11 +672,11 @@ pub enum MetaplexInstruction {
     ///   8. `[]` Clock sysvar
     SetAuctionCache,
 
-    /// Given a signer wallet, create a store with pda ['nft-marketplace', wallet] (if it does not exist) and/or update it
+    /// Given a signer wallet, create a store with pda ['metaplex', wallet] (if it does not exist) and/or update it
     /// (if it already exists). Stores can be set to open (anybody can publish) or closed (publish only via whitelist).
     ///
-    ///   0. `[writable]` The store key, seed of ['nft-marketplace', admin wallet]
-    ///   1. `[writable]` The store config key, seed of ['nft-marketplace', store key]
+    ///   0. `[writable]` The store key, seed of ['metaplex', admin wallet]
+    ///   1. `[writable]` The store config key, seed of ['metaplex', store key]
     ///   2. `[signer]`  The admin wallet
     ///   3. `[signer]`  Payer
     ///   4. `[]` Token program

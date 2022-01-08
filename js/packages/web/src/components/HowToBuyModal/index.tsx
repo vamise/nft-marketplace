@@ -26,7 +26,7 @@ export const HowToBuyModal: React.FC<HowToBuyModalProps> = ({
         {
           title: 'Add funds to your wallet',
           imgSrc: '/modals/how-to-buy-2.svg',
-          description: `To fund your wallet, you’ll need to purchase SOL tokens. The easiest way is with a credit card on FTX Pay a service that’s already part of your new Phantom wallet. Open your wallet, tap “Deposit SOL”, and select “Deposit from FTX”. A new window will open where you can create an FTX account and purchase Solana (SOL).`,
+          description: `To fund your wallet, you’ll need to purchase SOL tokens. The easiest way is with a credit card on FTX Pay—a service that’s already part of your new Phantom wallet. Open your wallet, tap “Deposit SOL”, and select “Deposit from FTX”. A new window will open where you can create an FTX account and purchase SOL.`,
         },
         {
           title: `Connect your wallet to ${LABELS.STORE_NAME}.`,

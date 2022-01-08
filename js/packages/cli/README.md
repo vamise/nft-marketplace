@@ -163,7 +163,7 @@ applied to all.
 
 ```
 
-metaplex generate_art_configurations <directory>
+nft-marketplace generate_art_configurations <directory>
 ts-node cli generate_art_configurations <directory>
 
 ```

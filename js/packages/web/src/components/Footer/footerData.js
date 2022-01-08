@@ -9,11 +9,11 @@ export const footerConf = {
       links: [
         {
           label: 'About',
-          url: 'www.nft.fyfy.io',
+          url: 'www.solana.com',
         },
         {
           label: 'Terms of service',
-          url: 'www.nft.fyfy.io',
+          url: 'www.solana.com',
         },
       ],
     },
@@ -22,19 +22,19 @@ export const footerConf = {
       links: [
         {
           label: 'FAQ',
-          url: 'www.nft.fyfy.io',
+          url: 'www.solana.com',
         },
         {
           label: 'Support',
-          url: 'support@fyfy.io',
+          url: 'www.solana.com',
         },
         {
           label: 'Privacy policy',
-          url: 'www.nft.fyfy.io',
+          url: 'www.solana.com',
         },
         {
           label: 'Your purchases',
-          url: 'www.marketplace.fyfy.io',
+          url: 'www.solana.com',
         },
       ],
     },
@@ -43,15 +43,15 @@ export const footerConf = {
       links: [
         {
           label: 'Instagram',
-          url: 'www.instagram.com/fyfyio',
+          url: 'www.solana.com',
         },
         {
           label: 'Twitter',
-          url: 'www.twitter.com/fyfyio',
+          url: 'www.solana.com',
         },
         {
           label: 'Discord',
-          url: 'https://discord.gg/xAGrEUHcga',
+          url: 'www.solana.com',
         },
       ],
     },

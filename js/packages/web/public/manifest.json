@@ -1,6 +1,6 @@
 {
-  "name": "FYFY Marketplace",
-  "short_name": "NFT Marketplace",
+  "name": "Metaplex NFT Marketplace",
+  "short_name": "Metaplex NFT Marketplace",
   "display": "standalone",
   "start_url": "./",
   "theme_color": "#002140",
