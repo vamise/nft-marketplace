@@ -10,7 +10,7 @@ export const DefaultModal = (props: any) => {
     <Modal
       style={{ background: "transparent", borderRadius: 16 }}
       bodyStyle={{
-        background: "#333333",
+        background: "#011321333",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
