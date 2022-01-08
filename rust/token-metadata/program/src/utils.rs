@@ -820,7 +820,7 @@ pub fn process_create_metadata_accounts_logic(
     let mut update_authority_key = *update_authority_info.key;
     let existing_mint_authority = get_mint_authority(mint_info)?;
     // IMPORTANT NOTE
-    // This allows the Metaplex Foundation to Create but not update metadata for SPL tokens that have not populated their metadata.
+    // This allows the FYFY - NFT Marketplace to Create but not update metadata for SPL tokens that have not populated their metadata.
     assert_mint_authority_matches_mint(&existing_mint_authority, mint_authority_info).or_else(
         |e| {
             // Allow seeding by the authority seed populator

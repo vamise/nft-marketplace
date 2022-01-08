@@ -97,9 +97,9 @@ export const verifyImageURL = (image, files, manifestFile) => {
     // We _could_ match against this in the JSON schema validation, but it is totally valid to have arbitrary URLs to images here.
     // The downside, though, is that those images will not get uploaded to Arweave since they're not on-disk.
     log.warn(`We expected the \`image\` property in ${manifestFile} to be ${expectedImagePath}.
-This will still work properly (assuming the URL is valid!), however, this image will not get uploaded to Arweave through the \`metaplex upload\` command.
+This will still work properly (assuming the URL is valid!), however, this image will not get uploaded to Arweave through the \`nft marketplace upload\` command.
 If you want us to take care of getting this into Arweave, make sure to set \`image\`: "${expectedImagePath}"
-The \`metaplex upload\` command will automatically substitute this URL with the Arweave URL location.
+The \`nft marketplace upload\` command will automatically substitute this URL with the Arweave URL location.
     `);
   }
   const mediaFiles = files.filter(file => file.type !== EXTENSION_JSON);

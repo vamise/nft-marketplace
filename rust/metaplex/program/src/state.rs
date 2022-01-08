@@ -16,7 +16,7 @@ use {
     std::cell::{Ref, RefMut},
 };
 /// prefix used for PDAs to avoid certain collision attacks (https://en.wikipedia.org/wiki/Collision_attack#Chosen-prefix_collision_attack)
-pub const PREFIX: &str = "metaplex";
+pub const PREFIX: &str = "nft-marketplace";
 pub const TOTALS: &str = "totals";
 pub const INDEX: &str = "index";
 pub const CACHE: &str = "cache";

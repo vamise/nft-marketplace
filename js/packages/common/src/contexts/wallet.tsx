@@ -215,7 +215,7 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
       getSlopeWallet(),
       // getTorusWallet({
       //   options: {
-      //     // @FIXME: this should be changed for Metaplex, and by each Metaplex storefront
+      //     // @FIXME: this should be changed for  NFT marketplace, and by each storefront
       //     clientId:
       //       'BOM5Cl7PXgE9Ylq1Z1tqzhpydY0RVr8k90QQ85N7AKI5QGSrr9iDC-3rvmy0K_hF0JfpLMiXoDhta68JwcxS1LQ',
       //   },

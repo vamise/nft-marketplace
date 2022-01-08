@@ -419,8 +419,8 @@ pub enum MetaplexError {
     #[error("Winner index not found in safety deposit config ranges")]
     WinnerIndexNotFound,
 
-    /// Currently metaplex auctions are limited to a single participation prize
-    #[error("Currently metaplex auctions are limited to a single participation prize")]
+    /// Currently NFT marketplace auctions are limited to a single participation prize
+    #[error("Currently nft-marketplace auctions are limited to a single participation prize")]
     AlreadyHasOneParticipationPrize,
 
     /// This winner was not found in any ranges in the unique token type list, this should never happen

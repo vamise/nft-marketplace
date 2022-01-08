@@ -422,7 +422,7 @@ pub struct AuctionData {
     pub authority: Pubkey,
     /// Pubkey of the resource being bid on.
     /// TODO try to bring this back some day. Had to remove this due to a stack access violation bug
-    /// interactin that happens in metaplex during redemptions due to some low level rust error
+    /// interactin that happens in NFT marketplace during redemptions due to some low level rust error
     /// that happens when AuctionData has too many fields. This field was the least used.
     ///pub resource: Pubkey,
     /// Token mint for the SPL token being used to bid
