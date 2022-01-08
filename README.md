@@ -4,6 +4,7 @@
   </a>
 </p>
 
+
 ### Fyfy NFT marketplace is a protocol built on top of Solana that allows:
 
 - **Creating/Minting** Non-Fungible Tokens;
