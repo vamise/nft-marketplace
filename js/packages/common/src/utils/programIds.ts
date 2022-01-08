@@ -24,7 +24,7 @@ export const getStoreID = async (storeOwnerAddress?: string) => {
   console.log('Store owner', storeOwnerAddress, METAPLEX_ID);
   const programs = await findProgramAddress(
     [
-      Buffer.from('nft-marketplace'),
+      Buffer.from('metaplex'),
       toPublicKey(METAPLEX_ID).toBuffer(),
       toPublicKey(storeOwnerAddress).toBuffer(),
     ],

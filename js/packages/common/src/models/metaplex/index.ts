@@ -38,7 +38,7 @@ export * from './redeemPrintingV2Bid';
 export * from './withdrawMasterEdition';
 export * from './deprecatedStates';
 
-export const METAPLEX_PREFIX = 'nft-marketplace';
+export const METAPLEX_PREFIX = 'metaplex';
 export const INDEX = 'index';
 export const CACHE = 'cache';
 export const TOTALS = 'totals';
