@@ -52,7 +52,7 @@ const ConnectButton = styled(WalletDialogButton)`
   height: 60px;
   margin-top: 10px;
   margin-bottom: 5px;
-  background: linear-gradient(180deg, #604ae5 0%, #813eee 100%);
+  background: linear-gradient(180deg, #0091ff 0%, #0074cc 100%);
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -88,7 +88,7 @@ const ValueSlider = styled(Slider)({
     height: 24,
     width: 24,
     marginTop: -10,
-    background: 'linear-gradient(180deg, #604AE5 0%, #813EEE 100%)',
+    background: 'linear-gradient(180deg, #0091ff 0%, #0074cc 100%)',
     border: '2px solid currentColor',
     '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
       boxShadow: 'inherit',
@@ -99,7 +99,7 @@ const ValueSlider = styled(Slider)({
   },
   '& .MuiSlider-valueLabel': {
     '& > *': {
-      background: 'linear-gradient(180deg, #604AE5 0%, #813EEE 100%)',
+      background: 'linear-gradient(180deg, #0091ff 0%, #0074cc 100%)',
     },
     lineHeight: 1.2,
     fontSize: 12,
