@@ -5,7 +5,7 @@
   "description": "NFT marketplace Program Tests",
   "license": "MIT",
   "type": "module",
-  "author": "NFT marketplace Contributors",
+  "author": "Fyfy NFT marketplace Contributors",
   "devDependencies": {
     "@types/mocha": "^9.0.0",
     "@project-serum/anchor": "0.17.0",

@@ -45,7 +45,7 @@ export const FundsIssueModal = (props: {
           />
         </div>
         <hr/>
-        <span className={"issue-desc"}>Deposit the minimum amount of SOL and try again.</span>
+        <span className={"issue-desc"}>Deposit the minimum amount of Solana (SOL) and try again.</span>
         <Button className={"secondary-btn width-100"} onClick={props.onClose}>
           Dismiss
         </Button>
