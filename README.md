@@ -5,7 +5,7 @@
 </p>
 
 
-#### FYFY NFT marketplace is a protocol built on top of Solana that allows:
+#### FYFY´s NFT marketplace is a protocol built on top of Solana that allows:
 
 - **Creating/Minting** Non-Fungible Tokens;
 - **Starting** A variety of auctions for primary/secondary sales;
@@ -13,9 +13,9 @@
 
 NFT marketplace is comprised of two core components: an on-chain program, and a self-hosted front-end web3 application.
 
-## Official Metaplex Docs and Guide
+## Official NFT Marketplace Docs and Guide (coming soon)
 
-You can check out our docs at https://docs.metaplex.com/
+You can check out our docs at https://docs.nft.fyfy.io/
 
 ## Installing
 
