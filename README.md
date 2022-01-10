@@ -5,42 +5,17 @@
 </p>
 
 
-### Fyfy NFT marketplace is a protocol built on top of Solana that allows:
+#### FYFY NFT marketplace is a protocol built on top of Solana that allows:
 
 - **Creating/Minting** Non-Fungible Tokens;
 - **Starting** A variety of auctions for primary/secondary sales;
 - and **Visualizing** NFTs in a standard way across wallets and applications.
 
-FYFY NFT marketplace is comprised of two core components: an on-chain program, and a self-hosted front-end web3 application.
+NFT marketplace is comprised of two core components: an on-chain program, and a self-hosted front-end web3 application.
 
-## Important NOTE
+## Official Metaplex Docs and Guide
 
-NFT marketplace now follows a release versioning process called semantic versioning. If you are making a new market place, launching a candy machine or any live project that will handle real money, we recommend using a release tag. Using a release tag will ensure that new changes don't break your UI.
-
-https://github.com/vamise/nft-marketplace/releases
-
-### How to checkout a release
-```
-//If you are using a fork
-git fetch upstream --tags
-
-git checkout tags/<tag> // this will bring the contents of the tag into your current branch
-
-// OR 
-git checkout tags/<tag> -b <your local branch name> // this will make a new branch for you
-
-To swich to a new release
-
-git checkout tags/<tag> -b new_version_branch /// this will take the new tag and bring it into  anew branch
-//Switch back to the branch you want the new changes in
-git rebase new_version_branch
-```
-
-## In Depth Developer's Guide
-
-If you want to deep dive on the Architecture, you can do so here:
-
-https://nft.fyfy.io/docs/
+You can check out our docs at https://docs.metaplex.com/
 
 ## Installing
 
@@ -64,17 +39,17 @@ bindings that allow interactivity.
 
 We have a few channels for contact:
 
-- [Discord](https://discord.gg/xAGrEUHcga)
-- [@nft-marketplace](https://twitter.com/fyfy-io) on Twitter
+- [Discord](https://discord.gg/https://discord.com/channels/918811466071683083/918811466801504260)
+- [@fyfyio](https://twitter.com/fyfyio) on Twitter
 - [GitHub Issues](https://github.com/vamise/nft-marketplace/issues)
 
 # Protocol
 
 ## Non-fungible tokens(NFT)
 
-Fyfy's NFT marketplace non-fungible-token standard is a part of the Solana Program Library (SPL), and can be characterized as a unique token with a fixed supply of 1 and 0 decimals. We extended the basic definition of an NFT on Solana to include additional metadata such as URI as defined in ERC-721 on Ethereum.
+Metaplex's non-fungible-token standard is a part of the Solana Program Library (SPL), and can be characterized as a unique token with a fixed supply of 1 and 0 decimals. We extended the basic definition of an NFT on Solana to include additional metadata such as URI as defined in ERC-721 on Ethereum.
 
-Below are the types of NFTs that can be created using the NFT marketplace protocol.
+Below are the types of NFTs that can be created using the Fyfy´s NFT marketplace protocol.
 
 ### **Master Edition**
 
@@ -140,15 +115,15 @@ A tiered auction can contain a mix of the other three auction types as winning p
 
 ## Royalties
 
-Fyfy.io can seamlessly create on-chain artist splits that remove the awkwardness out of collaboration.
+NFT marketplace can seamlessly create on-chain artist splits that remove the awkwardness out of collaboration.
 
 Tag each collaborator, set custom percentages, and you’re off to the races. Each NFT can also be minted with configurable royalty payments that are then sent automatically back to the original creators whenever an artwork is resold on a NFT marketplace in the future.
 
 ## Storefronts
 
-Fyfy's off-chain component allows creators to launch a custom storefront, similar to Shopify or WordPress. This open-source project provides a graphical interface to the on-chain NFT marketplace program, for creators, buyers, and curators of NFTs. The design and layout of storefronts can be customized to suit the needs of the entity creating it, either as a permanent storefront or an auction hub for a specific auction or collection.
+Fyfy Lab's NFT Marketplace off-chain component allows creators to launch a custom storefront, similar to Shopify or WordPress. This open-source project provides a graphical interface to the on-chain NFT marketplace program, for creators, buyers, and curators of NFTs. The design and layout of storefronts can be customized to suit the needs of the entity creating it, either as a permanent storefront or an auction hub for a specific auction or collection.
 
-All identification on the Storefront is based on wallet addresses. Creators and store admins sign through their wallets, and users place bids from connected wallets. Custom storefronts allow creators to create unique experiences per auction. Additionally, the Fyfy.io is working on multiple partnerships that will enable building immersive storefronts using VR/AR.
+All identification on the Storefront is based on wallet addresses. Creators and store admins sign through their wallets, and users place bids from connected wallets. Custom storefronts allow creators to create unique experiences per auction. Additionally, the Fyfy Labs is working on multiple partnerships that will enable building immersive storefronts using VR/AR.
 
 ## Development
 
