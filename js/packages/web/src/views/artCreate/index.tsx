@@ -243,7 +243,7 @@ const CategoryStep = (props: {
         <p>
           First time creating on NFT Marketplace?{' '}
           <a href="https://docs.nft.fyfy.io/create-store/sell" target="_blank" rel="noreferrer">
-            Read our creators’ guide.
+            Read our creators guide.
           </a>
         </p>
       </Row>
@@ -439,7 +439,7 @@ const UploadStep = (props: {
           {coverArtError ? (
             <Text type="danger">{coverArtError}</Text>
           ) : (
-            <p className="ant-upload-text" style={{ color: '#7a7a7a' }}>
+            <p className="ant-upload-text" style={{ color: '#6d6d6d' }}>
               Drag and drop, or click to browse
             </p>
           )}
@@ -476,7 +476,7 @@ const UploadStep = (props: {
             <div className="ant-upload-drag-icon">
               <h3 style={{ fontWeight: 700 }}>Upload your creation</h3>
             </div>
-            <p className="ant-upload-text" style={{ color: '#7a7a7a' }}>
+            <p className="ant-upload-text" style={{ color: '#6d6d6d' }}>
               Drag and drop, or click to browse
             </p>
           </Dragger>
@@ -1168,7 +1168,7 @@ const LaunchStep = (props: {
           onClick={props.confirm}
           className="action-btn"
         >
-          Pay with SOL
+          Pay with Solana (SOL)
         </Button>
         <Button
           disabled={true}
@@ -1281,12 +1281,12 @@ const Congrats = (props: {
 
   const newTweetURL = () => {
     const params = {
-      text: "I've created a new NFT artwork on Fyfy marketplace, check it out!",
+      text: "I've created a new NFT artwork on marketplace, check it out!",
       url: `${
         window.location.origin
       }/#/art/${props.nft?.metadataAccount.toString()}`,
-      hashtags: 'NFT,Crypto,Fyfy',
-      // via: "NFT Markeplace",
+      hashtags: 'NFT,Crypto,Marketplace',
+      // via: "NFT marketplace",
       related: 'Fyfy,Solana',
     };
     const queryParams = new URLSearchParams(params).toString();
