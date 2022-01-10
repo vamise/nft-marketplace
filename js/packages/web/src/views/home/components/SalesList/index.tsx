@@ -30,9 +30,9 @@ export const SalesListView = () => {
   return (
     <>
       <Banner
-        src="/main-banner.svg"
-        headingText="The amazing world of Metaplex."
-        subHeadingText="Buy exclusive Metaplex NFTs."
+        src="/main-banner.png"
+        headingText="Creating Decentralized NFT Marketplace"
+        subHeadingText="Discover, buy and sell crypto collectibles and assets from Fyfy´s marketplace for nonfungible tokens (NFTs) or create your own storefront"
         actionComponent={<HowToBuyModal buttonClassName="secondary-btn" />}
         useBannerBg
       />
