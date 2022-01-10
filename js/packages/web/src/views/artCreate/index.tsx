@@ -241,9 +241,9 @@ const CategoryStep = (props: {
       <Row className="call-to-action">
         <h2>Create a new item</h2>
         <p>
-          First time creating on NFT Marketplace?{' '}
-          <a href="https://docs.nft.fyfy.io/create-store/sell" target="_blank" rel="noreferrer">
-            Read our creators guide.
+          First time creating on NFT marketplace?{' '}
+          <a href="https://docs.nft.marketplace/create-store/sell" target="_blank" rel="noreferrer">
+            Read our creators’ guide.
           </a>
         </p>
       </Row>
@@ -1168,7 +1168,7 @@ const LaunchStep = (props: {
           onClick={props.confirm}
           className="action-btn"
         >
-          Pay with Solana (SOL)
+          Pay with SOL
         </Button>
         <Button
           disabled={true}
@@ -1286,7 +1286,7 @@ const Congrats = (props: {
         window.location.origin
       }/#/art/${props.nft?.metadataAccount.toString()}`,
       hashtags: 'NFT,Crypto,Marketplace',
-      // via: "NFT marketplace",
+      // via: "Marketplace",
       related: 'Fyfy,Solana',
     };
     const queryParams = new URLSearchParams(params).toString();

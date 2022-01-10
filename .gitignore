@@ -17,8 +17,8 @@ yarn-debug.log*
 yarn-error.log*
 *.css
 *.css.map
-!js/packages/metaplex/src/fonts/fonts.css
-!js/packages/metaplex/src/utils/globals.css
+!js/packages/nft-marketplace/src/fonts/fonts.css
+!js/packages/nft-marketplace/src/utils/globals.css
 js/.eslintcache
 target
 .env
