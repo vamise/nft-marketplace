@@ -32,7 +32,7 @@ export const SalesListView = () => {
       <Banner
         src="/main-banner.png"
         headingText="Creating Decentralized NFT Marketplace"
-        subHeadingText="Discover, buy and sell crypto collectibles and assets from Fyfy´s marketplace for nonfungible tokens (NFTs) or create your own storefront"
+        subHeadingText="Discover, buy and sell crypto collectibles and assets from Fyfy´s marketplace for nonfungible tokens (NFTs) or create your own."
         actionComponent={<HowToBuyModal buttonClassName="secondary-btn" />}
         useBannerBg
       />
