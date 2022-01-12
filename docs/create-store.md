@@ -14,7 +14,7 @@ store information, such as who to whitelist as creators.
 
 ### Setting Up the Store ID
 
-To create a store, you must first derive the store ID given your public address. The Fyfy.io devs have already created
+To create a store, you must first derive the store ID given your public address. The NFT marketplace devs have already created
 an environment variable for you to utilize - `REACT_APP_STORE_OWNER_ADDRESS_ADDRESS` - which you should set to be your
 wallet public address. To do this, you can create a `.env` file in `packages/web`, and set
 `REACT_APP_STORE_OWNER_ADDRESS_ADDRESS` to be your wallet public address in there.

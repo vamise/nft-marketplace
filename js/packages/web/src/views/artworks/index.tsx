@@ -25,7 +25,7 @@ export const ArtworksView = () => {
   } = useMeta();
   const { userAccounts } = useUserAccounts();
 
-  const [activeKey, setActiveKey] = useState(ArtworkViewState.Metaplex);
+  const [activeKey, setActiveKey] = useState(ArtworkViewState.NFT marketplace);
 
   const userItems = useItems({ activeKey });
 
@@ -39,7 +39,7 @@ export const ArtworksView = () => {
     if (connected) {
       setActiveKey(ArtworkViewState.Owned);
     } else {
-      setActiveKey(ArtworkViewState.Metaplex);
+      setActiveKey(ArtworkViewState.NFT marketplace);
     }
   }, [connected, setActiveKey]);
 
@@ -91,7 +91,7 @@ export const ArtworksView = () => {
             >
               <TabPane
                 tab={<span className="tab-title">All</span>}
-                key={ArtworkViewState.Metaplex}
+                key={ArtworkViewState.NFT marketplace}
               >
                 {artworkGrid}
               </TabPane>

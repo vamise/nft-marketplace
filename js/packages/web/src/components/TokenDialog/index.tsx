@@ -211,7 +211,7 @@ function TokenName({ mint, style }: { mint: PublicKey; style?: any}) {
       <div style={{ fontWeight: 500, color: 'white', }}>
         {tokenInfo? tokenName:`${shortenAddress(mint.toBase58())}`}
       </div>
-      <div color="textSecondary" style={{ fontSize: "14px", color: '#1e4769', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', }}>
+      <div color="textSecondary" style={{ fontSize: "14px", color: '#797A8C', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', }}>
         {tokenName}
       </div>
     </div>

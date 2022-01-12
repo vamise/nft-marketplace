@@ -13,7 +13,6 @@ incremented for features.
 
 ### Features
 
-- Add Fyfy color presets and brand
 - Candy Machine now supports GIF, PNG and JPEG
 - Added Token Entangler smart contract and CLI
 - Add update authority command for candy machine
@@ -60,7 +59,7 @@ incremented for features.
 - Fixes #930
 - Fixes Token Metadata Test Harness and lints rust code.
 - When a token account already exists, punchTicket should not blow up in punch_and_refund_all_outstanding.
-- Fix for punch ticket showing up as a button if you have an FLP presale token but didn't win. You should see Withdrawal.
+- Fix for punch ticket showing up as a button if you have an FLP pre-sale token but didn't win. You should see Withdrawal.
 - Fix wrong share value for creators
 - Fix lint issues preventing CI from passing
 - In Jares first useful contribution we see Jares second rust thing, refunding some millions $ back in unused candy configs to the authorities. Check 'withdraw' in the candy-machine-cli :)

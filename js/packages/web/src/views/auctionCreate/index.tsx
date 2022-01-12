@@ -718,7 +718,7 @@ const CategoryStep = (props: {
       <Row className="call-to-action">
         <h2>List an item</h2>
         <p>
-          First time listing on Metaplex? <a>Read our sellers' guide.</a>
+          First time listing on NFT marketplace? <a>Read our sellers' guide.</a>
         </p>
       </Row>
       <Row justify={width < 768 ? 'center' : 'start'}>
@@ -2055,7 +2055,7 @@ const WaitingStep = (props: {
     >
       <Progress type="circle" percent={progress} />
       <div className="waiting-title">
-        Your creation is being listed with Metaplex...
+        Your creation is being listed with NFT marketplace...
       </div>
       <div className="waiting-subtitle">This can take up to 30 seconds.</div>
     </div>
@@ -2073,13 +2073,13 @@ const Congrats = (props: {
 
   const newTweetURL = () => {
     const params = {
-      text: "I've created a new NFT auction on FYFY NFT Markeplace, check it out!",
+      text: "I've created a new NFT auction on NFT marketplace, check it out!",
       url: `${
         window.location.origin
       }/#/auction/${props.auction?.auction.toString()}`,
-      hashtags: 'NFT,Crypto,Fyfy',
-      // via: "NFT Marketplace",
-      related: 'Fyfy,Solana',
+      hashtags: 'NFT,Crypto,NFT marketplace',
+      // via: "NFT marketplace",
+      related: 'NFT marketplace,Solana',
     };
     const queryParams = new URLSearchParams(params).toString();
     return `https://twitter.com/intent/tweet?${queryParams}`;

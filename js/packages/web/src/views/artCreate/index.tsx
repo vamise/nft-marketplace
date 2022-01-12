@@ -242,7 +242,7 @@ const CategoryStep = (props: {
         <h2>Create a new item</h2>
         <p>
           First time creating on NFT marketplace?{' '}
-          <a href="https://docs.nft.marketplace/create-store/sell" target="_blank" rel="noreferrer">
+          <a href="https://nft.fyfy.io/docs/create-store/sell" target="_blank" rel="noreferrer">
             Read our creators’ guide.
           </a>
         </p>
@@ -1281,13 +1281,13 @@ const Congrats = (props: {
 
   const newTweetURL = () => {
     const params = {
-      text: "I've created a new NFT artwork on marketplace, check it out!",
+      text: "I've created a new NFT artwork on NFT marketplace, check it out!",
       url: `${
         window.location.origin
       }/#/art/${props.nft?.metadataAccount.toString()}`,
-      hashtags: 'NFT,Crypto,Marketplace',
-      // via: "Marketplace",
-      related: 'Fyfy,Solana',
+      hashtags: 'NFT,Crypto,NFT marketplace',
+      // via: "NFT marketplace",
+      related: 'NFT marketplace,Solana',
     };
     const queryParams = new URLSearchParams(params).toString();
     return `https://twitter.com/intent/tweet?${queryParams}`;

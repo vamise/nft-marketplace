@@ -94,7 +94,7 @@ const BUNDLE_SIZE_BYTE_LIMIT = 50 * 1024 * 1024;
 /**
  * Tags to include with every individual transaction.
  */
-const BASE_TAGS = [{ name: 'App-Name', value: 'FYFY Candy Machine' }];
+const BASE_TAGS = [{ name: 'App-Name', value: 'NFT marketplace Candy Machine' }];
 
 const contentTypeTags = {
   json: { name: 'Content-Type', value: 'application/json' },
