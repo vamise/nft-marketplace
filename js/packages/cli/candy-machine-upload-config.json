@@ -1,13 +1,13 @@
 {
-  "price": 0.01,
-  "number": null,
+  "price": 0.2,
+  "number": 10,
   "gatekeeper": {
     "gatekeeperNetwork": "ignREusXmGrscGNUesoU9mxfds9AiYTezUKex2PsZV6",
     "expireOnUse": true
   },
-  "solTreasuryAccount": null,
-  "splTokenAccount": null,
-  "splToken": null,
+  "solTreasuryAccount": "nftfqbKZbFnb2uBdKMgubKv89dpzZdTUd1r4SPF4YLw",
+  "splTokenAccount": "nftfqbKZbFnb2uBdKMgubKv89dpzZdTUd1r4SPF4YLw",
+  "splToken": "FYFY NFT Token",
   "goLiveDate": null,
   "endSettings": null,
   "whitelistMintSettings": null,

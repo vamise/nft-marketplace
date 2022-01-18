@@ -25,7 +25,7 @@ export const ArtworksView = () => {
   } = useMeta();
   const { userAccounts } = useUserAccounts();
 
-  const [activeKey, setActiveKey] = useState(ArtworkViewState.NFT marketplace);
+  const [activeKey, setActiveKey] = useState(ArtworkViewState.Metaplex);
 
   const userItems = useItems({ activeKey });
 
@@ -39,7 +39,7 @@ export const ArtworksView = () => {
     if (connected) {
       setActiveKey(ArtworkViewState.Owned);
     } else {
-      setActiveKey(ArtworkViewState.NFT marketplace);
+      setActiveKey(ArtworkViewState.Metaplex);
     }
   }, [connected, setActiveKey]);
 
@@ -47,7 +47,8 @@ export const ArtworksView = () => {
 
   const artworkGrid = (
     <div className="artwork-grid">
-      {isDataLoading && [...Array(10)].map((_, idx) => <CardLoader key={idx} />)}
+      {isDataLoading &&
+        [...Array(10)].map((_, idx) => <CardLoader key={idx} />)}
       {!isDataLoading &&
         userItems.map(item => {
           const pubkey = isMetadata(item)
@@ -91,7 +92,7 @@ export const ArtworksView = () => {
             >
               <TabPane
                 tab={<span className="tab-title">All</span>}
-                key={ArtworkViewState.NFT marketplace}
+                key={ArtworkViewState.Metaplex}
               >
                 {artworkGrid}
               </TabPane>

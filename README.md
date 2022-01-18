@@ -15,7 +15,7 @@ NFT marketplace is comprised of two core components: an on-chain program, and a 
 
 ## Official NFT Marketplace Docs and Guide (coming soon)
 
-You can check out our docs at https://docs.nft.fyfy.io/
+You can check out our docs at https://nft.fyfy.io/docs/
 
 ## Installing
 

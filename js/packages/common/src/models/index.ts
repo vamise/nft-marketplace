@@ -1,3 +1,3 @@
 export * from './account';
-export * from './nft-marketplace';
+export * from './metaplex';
 export * from './packs';

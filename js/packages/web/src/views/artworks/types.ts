@@ -5,7 +5,7 @@ import { ExtendedPack } from '../../types/packs';
 export type Item = ExtendedPack | SafetyDepositDraft | ParsedAccount<Metadata>;
 
 export enum ArtworkViewState {
-  NFT marketplace = '0',
+  Metaplex = '0',
   Owned = '1',
   Created = '2',
 }
