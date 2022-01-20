@@ -122,7 +122,7 @@ export const Footer = () => {
       </div>
       <div className="footer-foot">
         <div className="small-body footer-link">
-          2022 {LABELS.STORE_NAME}. All rights reserved
+          © 2022 {LABELS.STORE_NAME}. All Rights Reserved
         </div>
       </div>
     </div>
