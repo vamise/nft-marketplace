@@ -14,7 +14,7 @@ This is the bedrock contract of the entire ecosystem. All that you need to inter
 
 Furthermore, if your mint has one token in its supply, you can give it an additional decoration PDA, of type MasterEdition. This PDA denotes the mint as a special type of object that can mint other mints - which we call Editions (as opposed to MasterEditions because they can't print other mints themselves). This makes this mint like the "master records" that record studios used to use to make new copies of records back in the day. The MasterEdition PDA will take away minting and freezing authority from you in the process and will contain information about total supply, maximum possible supply, etc.
 
-The existence of Metadata and its sister PDA MasterEdition makes a very powerful combination for a mint that enables the entire rest of the Metaplex contract stack. Now you can create:
+The existence of Metadata and its sister PDA MasterEdition makes a very powerful combination for a mint that enables the entire rest of the NFT marketplace contract stack. Now you can create:
 
 - Normal mints that just have names (Metadata but no MasterEdition)
 - One of a kind NFTs (Metadata + MasterEdition with `max_supply` of 0)
@@ -35,7 +35,7 @@ When there are outstanding shares, you cannot, as the vault owner, **Combine** t
 
 ### Auction
 
-The Auction Contract represents an auction primitive, and it knows nothing about NFTs, or Metadata, or anything else in the Fyfy´s ecosystem. All it cares about is that it has a resource address, it has auction mechanics, and it is using those auction mechanics to auction off that resource. It currently supports English Auctions and Open Edition Auctions (no winners but bids are tracked.) Its only purpose is to track who won what place in an auction and to collect money for those wins. When you place bids, or cancel them, you are interacting with this contract. However, when you redeem bids, you are not interacting with this contract, but NFT marketplace, because while it can provide proof that you did indeed win 4th place, it has no opinion on how the resource being auctioned off is divvied up between 1st, 2nd, 3rd, and 4th place winners, for example.
+The Auction Contract represents an auction primitive, and it knows nothing about NFTs, or Metadata, or anything else in the Fyfy ecosystem. All it cares about is that it has a resource address, it has auction mechanics, and it is using those auction mechanics to auction off that resource. It currently supports English Auctions and Open Edition Auctions (no winners but bids are tracked.) Its only purpose is to track who won what place in an auction and to collect money for those wins. When you place bids, or cancel them, you are interacting with this contract. However, when you redeem bids, you are not interacting with this contract, but NFT marketplace, because while it can provide proof that you did indeed win 4th place, it has no opinion on how the resource being auctioned off is divided up between 1st, 2nd, 3rd, and 4th place winners, for example.
 
 This contract will be expanded in the future to include other auction types, and better guarantees between that the auctioneer claiming the bid actually has provided the prize by having the winner sign a PDA saying that they received the prize. Right now this primitive contract should *not* be used in isolation, but in companionship with another contract (like NFT marketplace in our case) that makes such guarantees that prizes are delivered if prizes are won.
 
@@ -77,7 +77,7 @@ Now that we've gone over the contracts, let's run through an example of how the 
 13. Users can go and call `place_bid` on the Auction contract to place bids. When they do this, tokens of the `token_mint` type used by the auction are taken from the account they provide, tied to their main wallet, and stored in bidder pot accounts in the auction contract.
 14. In order to update a bid, a user must first cancel the original bid, and then place a new bid.
 15. Once the auction is over, a user can refund their bid if they did not win by calling `cancel_bid` again. Winners of the auction cannot cancel their bids.
-16. The winner of a bid creates a mint with decimals 0, a token account with 1 token in it, and calls the `redeem_printing_v2_bid` endpoint on the Metaplex contract, all in a single transaction. This token is now *officially* a Limited Edition of the "Bob's Cool NFT" Master Edition NFT!
+16. The winner of a bid creates a mint with decimals 0, a token account with 1 token in it, and calls the `redeem_printing_v2_bid` endpoint on the NFT marketplace contract, all in a single transaction. This token is now *officially* a Limited Edition of the "Bob's Cool NFT" Master Edition NFT!
 17. You, the auctioneer, visits /#/auction/id/billing and hit the settle button. This first iterates over all three bidders and for each wallet used, calls `claim_bid` on the NFT marketplace contract, which proxy-calls a `claim_bid` on the Auction contract, telling it to dump the winner's payment into an escrow account called `accept_payment` on the AuctionManager struct. It has the same token type as the auction. Once all payments have been collected, the front end then calls the `empty_payment_account` endpoint one time (since you are the only creator on the Metadata being sold) and the funds in this escrow are paid out to a token account provided of the same type owned by you.
 
     Note that our front end reference implementation uses SOL as the "token type." This has some special caveats, namely that SOL isn't really an "spl token." It instead has a work-around called the "Wrapped SOL mint." This is a special mint that is often used in a transient account. What this means is that when we place a bid, we actually make a one-off system account, transfer lamports to it of your bid amount + rent, then label it an spl-token account of the wrapped sol type, use it to place the bid, then close it all in one transaction.
@@ -178,7 +178,7 @@ pub struct EditionMarker {
 
 ```
 
-The instruction set for the token metadata contract can be found here: https://github.com/metaplex-foundation/metaplex-program-library/blob/master/token-metadata/program/src/instruction.rs
+The instruction set for the token metadata contract can be found here: https://github.com/vamise/nft-marketplace/blob/master/token-metadata/program/src/instruction.rs
 
 ### Types
 
@@ -214,13 +214,13 @@ This is important to internalize, because it means you as a Rust developer can t
 
 ### Co-Creators
 
-The SPL Metadata program supports storing up to five co-creators that share potential future profits from sales for the items as defined by `seller_fee_basis_points` . Each creator needs to be added as part of the minting process and is required to approve metadata that was used in his name using the `sign_metadata` endpoint. Unverified artwork cannot be sold with Metaplex.
+The SPL Metadata program supports storing up to five co-creators that share potential future profits from sales for the items as defined by `seller_fee_basis_points` . Each creator needs to be added as part of the minting process and is required to approve metadata that was used in his name using the `sign_metadata` endpoint. Unverified artwork cannot be sold with NFT marketplace.
 
 During the first sale, creators share in 100% of the proceeds, while in follow up sales, they share in proceeds as a percentage determined by `seller_fee_basis_points`. Whether or not a metadata is considered in second sale or not is determined by the `primary_sale_happened` boolean on the Metadata account.
 
 ### URI JSON Schema
 
-The URI resource is compatible with [ERC-1155 JSON Schema](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema) in order to easily port NFTs across different chains using the wormhole bridge.  You can see how we build this in our reference implementation here: [https://github.com/metaplex-foundation/metaplex/blob/master/js/packages/web/src/actions/nft.tsx#L66](https://github.com/metaplex-foundation/metaplex/blob/master/js/packages/web/src/actions/nft.tsx#L66)
+The URI resource is compatible with [ERC-1155 JSON Schema](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema) in order to easily port NFTs across different chains using the wormhole bridge.  You can see how we build this in our reference implementation here: [https://github.com/vamise/nft-marketplace/blob/master/js/packages/web/src/actions/nft.tsx#L66](https://github.com/vamise/nft-marketplace/blob/master/js/packages/web/src/actions/nft.tsx#L66)
 
 ```jsx
 {
@@ -325,7 +325,7 @@ pub struct Vault {
 #[derive(Clone, BorshSerialize, BorshDeserialize)]
 pub struct SafetyDepositBox {
     // Please note if you change this struct, be careful as we read directly off it
-    // in Metaplex to avoid serialization costs...
+    // in NFT marketplace to avoid serialization costs...
     /// Each token type in a vault has it's own box that contains it's mint and a look-back
     pub key: Key,
     /// Key pointing to the parent vault
@@ -445,7 +445,7 @@ pub struct AuctionData {
 
 // Further storage for more fields. Would like to store more on the main data but due
 // to a borsh issue that causes more added fields to inflict "Access violation" errors
-// during redemption in main Metaplex app for no reason, we had to add this nasty PDA.
+// during redemption in main NFT marketplace app for no reason, we had to add this nasty PDA.
 #[repr(C)]
 #[derive(Clone, BorshSerialize, BorshDeserialize, PartialEq, Debug)]
 pub struct AuctionDataExtended {
@@ -579,9 +579,9 @@ AuctionDataExtended accounts always have PDA addresses of `['auction', auction_p
 
 ### Incompleteness
 
-The contract currently has a deficiency in it's implementation where an auctioneer can claim the funds for a winning bid without the winner having signed off on having received some sort of prize for that bid - which is why we mention the "conjunction" above in the Overview. Fyfy.io guarantees through the interaction with the NFT marketplace contract that all users of NFT marketplace + Auction combination get a prize, but use of Auction by itself does not guarantee a winner gets a prize for a bid, because this functionality does not exist in this contract alone yet. A future version of this contract will require the winning bidders to create a PDA admitting they have received a prize before the auctioneer can withdraw funds, making this a complete primitive that can be used without any other contract making guarantees.
+The contract currently has a deficiency in it's implementation where an auctioneer can claim the funds for a winning bid without the winner having signed off on having received some sort of prize for that bid - which is why we mention the "conjunction" above in the Overview. NFT marketplace guarantees through the interaction with the NFT marketplace contract that all users of NFT marketplace + Auction combination get a prize, but use of Auction by itself does not guarantee a winner gets a prize for a bid, because this functionality does not exist in this contract alone yet. A future version of this contract will require the winning bidders to create a PDA admitting they have received a prize before the auctioneer can withdraw funds, making this a complete primitive that can be used without any other contract making guarantees.
 
-The way Fyfy.io makes such a guarantee is that it controls the Vault resource being bid on, and if you present the NFT marketplace contract with a BidderMetadata account from the Auction that represents a winning bid, it will disburse the proper NFT to you from the Vault. You can do the same with your own custom implementation.
+The way NFT marketplace makes such a guarantee is that it controls the Vault resource being bid on, and if you present the NFT marketplace contract with a BidderMetadata account from the Auction that represents a winning bid, it will disburse the proper NFT to you from the Vault. You can do the same with your own custom implementation.
 
 ### Cancelling before Placing a Bid
 
@@ -908,13 +908,13 @@ For each creator, for each metadata(WinningConfigItem), for each winning place(W
 
 For instance, 1st place may have three items with 3 unique metadata won while 2nd place may have 4 metadata from 4 items, every item with a single unique creator. The split of funds in the 1st place is going to be 3 ways, while in 2nd place would be 4 ways. Even if 1st and 2nd place bids are the same, we want two records to reflect the royalties paid from 1st and 2nd place, because they would be different numbers in this case, and we want to preserve history.
 
-PayoutTickets always have PDAs of `['NFT marketplace, auction_manager_id, winning_config_index, winning_config_item_index, creator_index, safety_deposit_key, destination_owner]` where `auction_manager_id` is the address of the AuctionManager account, `winning_config_index` is the 0-based index of the WinningConfig in the AuctionManager settings you paid out in this ticket, `winning_config_item_index` is the 0-based index of the WinningConfigItem in that WinningConfig, `creator_index` is the 0-based creator index in that Metadata's creator array that you paid out for that WinningConfigItem (or 'auctioneer' if paying the auctioneer for this item), `safety_deposit_key` is the address to the safety deposit box for this item, and `destination_owner` is the owner of the destination account where the monies are being sent. Yeah, I know, painful.
+PayoutTickets always have PDAs of `['metaplex', auction_manager_id, winning_config_index, winning_config_item_index, creator_index, safety_deposit_key, destination_owner]` where `auction_manager_id` is the address of the AuctionManager account, `winning_config_index` is the 0-based index of the WinningConfig in the AuctionManager settings you paid out in this ticket, `winning_config_item_index` is the 0-based index of the WinningConfigItem in that WinningConfig, `creator_index` is the 0-based creator index in that Metadata's creator array that you paid out for that WinningConfigItem (or 'auctioneer' if paying the auctioneer for this item), `safety_deposit_key` is the address to the safety deposit box for this item, and `destination_owner` is the owner of the destination account where the monies are being sent. Yeah, I know, painful.
 
 ### Store
 
 Every person who forks the repository to make their own storefront should have a unique store struct that is seeded by their own administrative wallet. These are created and updated by the idempotent `set_store` endpoint. Each store can choose to use it's own token, token-metadata, token-vault and auction programs if it so chooses, though right now we've got a hard check that the token program is actually the global spl-token program. The store also can be either public or private, which determines whether or not AuctionManagers can sell items that have all non-whitelisted creators on them or not. We take a "bouncer-knows-your-friend-and-lets-you-in" approach to selling items in whitelist-only stores - if an item has at least one *verified* Whitelisted Creator, then it can be sold.
 
-Store PDAs are always a PDA seed of `['NFT marketplace', metaplex_program_id, admin_wallet]` where `metaplex_program_id` is the address of the NFT marketplace contract and `admin_wallet` is the wallet that is administering this store.
+Store PDAs are always a PDA seed of `['metaplex', metaplex_program_id, admin_wallet]` where `metaplex_program_id` is the address of the NFT marketplace contract and `admin_wallet` is the wallet that is administering this store.
 
 ### WhitelistedCreator
 
@@ -926,13 +926,13 @@ WhitelistedCreator PDAs are always a PDA seed of `['metaplex', metaplex_program_
 
 This PDA solely exists to prevent validating a safety deposit box twice, which could present security vulnerabilities. It is created for each safety deposit box when it is presented for validation.
 
-SafetyDepositValidationTickets are always PDAs with seed of `['NFT marketplace', metaplex_program_id, auction_manager_id, safety_deposit_key]`where `metaplex_program_id` is the address of the NFT marketplace contract, `auction_manager_id` is the address of the AuctionManager, and `safety_deposit_key` is the address of the SafetyDepositBox being validated.
+SafetyDepositValidationTickets are always PDAs with seed of `['metaplex', metaplex_program_id, auction_manager_id, safety_deposit_key]`where `metaplex_program_id` is the address of the NFT marketplace contract, `auction_manager_id` is the address of the AuctionManager, and `safety_deposit_key` is the address of the SafetyDepositBox being validated.
 
 ### OriginalAuthorityLookup
 
 These are created during FullRightsTransfers. When a FullRightsTransfer is happening, the Metadata `updateAuthority` is shifted from the Auctioneer to the AuctionManager so that it can grant it in turn to the winner, and this record is created to keep track of who the original `updateAuthority` was to return it later if the item is not sold. That functionality (returns) is not implemented as of this writing but will be in the near future.
 
-OriginalAuthorityLookups always have PDAs with seed of `['NFT marketplace', auction_id, metadata_key]` where `auction_id` is the address of the Auction and `metadata_key` is the address of the actual Metadata struct.
+OriginalAuthorityLookups always have PDAs with seed of `['metaplex', auction_id, metadata_key]` where `auction_id` is the address of the Auction and `metadata_key` is the address of the actual Metadata struct.
 
 ### PrizeTrackingTicket
 
@@ -944,7 +944,7 @@ Created on a distinct WinningConfigItem basis (ie by WinningConfigType AND mint)
 
 There are five major types of token sales supported by the NFT marketplace protocol. Four are covered in the WinningConfigType enum, but this is a bit limiting as it is really only considering sales to *winners*, and leaves out the all-important Participation NFT which is a different kind of sale we will consider separately.
 
-**TokenOnlyTransfer:** Probably the easiest to understand, this is a straight up spl_token_transfer command wrapped in a bunch of Metaplex magic. At the end of the day, the auctioneer still owns the Metadata struct and any other associated PDAs, but someone else now has the physical token in their wallets. These tokens will still show up and work just fine in Phantom and other supported wallet clients because those clients can still look up the Metadata. This is the difference between owning the Metadata and owning the token. For a token that is an Edition, the difference is nominal, as an Edition has zero printing rights and is immutable. However, for a token that is a MasterEdition, the difference is *substantial*, as the owner of the Metadata can rename it, change its symbol, it's URI, and creators array.
+**TokenOnlyTransfer:** Probably the easiest to understand, this is a straight up spl_token_transfer command wrapped in a bunch of NFT marketplace magic. At the end of the day, the auctioneer still owns the Metadata struct and any other associated PDAs, but someone else now has the physical token in their wallets. These tokens will still show up and work just fine in Phantom and other supported wallet clients because those clients can still look up the Metadata. This is the difference between owning the Metadata and owning the token. For a token that is an Edition, the difference is nominal, as an Edition has zero printing rights and is immutable. However, for a token that is a MasterEdition, the difference is *substantial*, as the owner of the Metadata can rename it, change its symbol, it's URI, and creators array.
 
 Note that owning the token itself is the *only* requirement for using the `update_primary_sale_happened_via_token` endpoint on the token metadata program *and* for using the `mint_new_edition_from_master_edition_via_token`.
 
@@ -974,7 +974,7 @@ Note because our front end implementation chooses to use SOL instead of a generi
 
 ### Validation
 
-Just because you provide a vault to an AuctionManager and an AuctionManagerSettings declaring this vault is filled with wonderful prizes *does not* believe that we will believe you. For every safety deposit box indexed in a WinningConfigItem, there must be a call to `validate_safety_deposit_box` after initiation where the safety deposit box is provided for inspection to the NFT marketplace contract so that it can verify that there are enough tokens, and of the right type, to pay off all winners in the auction.
+Just because you provide a vault to an AuctionManager and an AuctionManagerSettings declaring this vault is filled with wonderful prizes *does not* believe that NFT marketplace will believe you. For every safety deposit box indexed in a WinningConfigItem, there must be a call to `validate_safety_deposit_box` after initiation where the safety deposit box is provided for inspection to the NFT marketplace contract so that it can verify that there are enough tokens, and of the right type, to pay off all winners in the auction.
 
 Given how irritating this process is, we may in the future merge token-vault with NFT marketplace, or simply copy over the parts of it that are relevant, leaving token-vault out for those interested in experimenting with fractionalization.
 
