@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://nft.fyfy.io">
-    <img alt="NFT marketplace" src="js/packages/web/public/nft-github-logo.png" style="background: black; padding: 10px" width="1000" />
+    <img alt="NFT marketplace" src="js/packages/web/public/nft-marketplace-logo-dark.png" style="background: black; padding: 10px" width="1000" />
   </a>
 </p>
 
