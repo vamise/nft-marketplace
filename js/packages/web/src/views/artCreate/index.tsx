@@ -66,9 +66,8 @@ export const ArtCreateView = () => {
   const [step, setStep] = useState<number>(0);
   const [stepsVisible, setStepsVisible] = useState<boolean>(true);
   const [isMinting, setMinting] = useState<boolean>(false);
-  const [nft, setNft] = useState<
-    { metadataAccount: StringPublicKey } | undefined
-  >(undefined);
+  const [nft, setNft] =
+    useState<{ metadataAccount: StringPublicKey } | undefined>(undefined);
   const [files, setFiles] = useState<File[]>([]);
   const [attributes, setAttributes] = useState<IMetadataExtension>({
     name: '',
@@ -243,11 +242,7 @@ const CategoryStep = (props: {
         <h2>Create a new item</h2>
         <p>
           First time creating on NFT marketplace?{' '}
-          <a
-            href="https://nft.fyfy.io/docs/create-store/sell"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://nft.fyfy.io/docs/create-store/sell" target="_blank" rel="noreferrer">
             Read our creators’ guide.
           </a>
         </p>
@@ -558,11 +553,8 @@ const UploadStep = (props: {
                   : mainFile && mainFile.name,
             });
             const url = await fetch(customURL).then(res => res.blob());
-            const files = [
-              coverFile,
-              mainFile,
-              customURL ? new File([url], customURL) : '',
-            ].filter(f => f) as File[];
+            const files = [coverFile, mainFile, customURL ? new File([url], customURL) : '']
+              .filter(f => f) as File[];
 
             props.setFiles(files);
             props.confirm();
@@ -745,18 +737,16 @@ const InfoStep = (props: {
             <Form.List name="attributes">
               {(fields, { add, remove }) => (
                 <>
-                  {fields.map(({ key, name, fieldKey }) => (
+                  {fields.map(({ key, name }) => (
                     <Space key={key} align="baseline">
                       <Form.Item
                         name={[name, 'trait_type']}
-                        fieldKey={[fieldKey, 'trait_type']}
                         hasFeedback
                       >
                         <Input placeholder="trait_type (Optional)" />
                       </Form.Item>
                       <Form.Item
                         name={[name, 'value']}
-                        fieldKey={[fieldKey, 'value']}
                         rules={[{ required: true, message: 'Missing value' }]}
                         hasFeedback
                       >
@@ -764,7 +754,6 @@ const InfoStep = (props: {
                       </Form.Item>
                       <Form.Item
                         name={[name, 'display_type']}
-                        fieldKey={[fieldKey, 'display_type']}
                         hasFeedback
                       >
                         <Input placeholder="display_type (Optional)" />
@@ -950,7 +939,7 @@ const RoyaltiesStep = (props: {
         <label className="action-field">
           <span className="field-title">Royalty Percentage</span>
           <p>
-            This is how much of each secondary sale will be paid out to the
+            This is how much of each secondary sale will be paid out to the 
             creators.
           </p>
           <InputNumber
@@ -1289,13 +1278,13 @@ const Congrats = (props: {
 
   const newTweetURL = () => {
     const params = {
-      text: "I've created a new NFT artwork on NFT marketplace, check it out!",
+      text: "I've created a new NFT artwork on marketplace, check it out!",
       url: `${
         window.location.origin
       }/#/art/${props.nft?.metadataAccount.toString()}`,
-      hashtags: 'NFT,Crypto,NFT marketplace',
-      // via: "NFT marketplace",
-      related: 'NFT marketplace,Solana',
+      hashtags: 'NFT,Crypto,Metaplex',
+      // via: "Metaplex",
+      related: 'Metaplex,Solana',
     };
     const queryParams = new URLSearchParams(params).toString();
     return `https://twitter.com/intent/tweet?${queryParams}`;
