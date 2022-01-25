@@ -100,13 +100,7 @@ export async function uploadV2({
     : undefined;
 
   if (!cacheContent.program.uuid) {
-    const firstAssetKey = dedupedAssetKeys[0];
-    const firstAssetManifest = getAssetManifest(
-      dirname,
-      firstAssetKey.index.includes('json')
-        ? firstAssetKey.index
-        : `${firstAssetKey.index}.json`,
-    );
+    const firstAssetManifest = getAssetManifest(dirname, '0.json');
 
     try {
       const remainingAccounts = [];
@@ -239,14 +233,6 @@ export async function uploadV2({
                 allIndexesInSlice[i] >= lastPrinted + tick ||
                 allIndexesInSlice[i] === 0
               ) {
-                lastPrinted = i;
-                log.info(`Processing asset: ${allIndexesInSlice[i]}`);
-              }
-
-              if (
-                allIndexesInSlice[i] >= lastPrinted + tick ||
-                allIndexesInSlice[i] === 0
-              ) {
                 lastPrinted = allIndexesInSlice[i];
                 log.info(`Processing asset: ${allIndexesInSlice[i]}`);
               }
@@ -343,6 +329,7 @@ export async function uploadV2({
                     cacheContent.items[keys[i]] = {
                       ...cacheContent.items[keys[i]],
                       onChain: true,
+                      verifyRun: false,
                     };
                   });
                   saveCache(cacheName, env, cacheContent);
@@ -453,6 +440,7 @@ function getAssetManifest(dirname: string, assetKey: string): Manifest {
     manifest.properties.files[0].uri =
       manifest.properties.files[0]?.uri?.replace('image', assetIndex);
   }
+
   return manifest;
 }
 
