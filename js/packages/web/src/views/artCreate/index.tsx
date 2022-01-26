@@ -242,7 +242,7 @@ const CategoryStep = (props: {
         <h2>Create a new item</h2>
         <p>
           First time creating on NFT marketplace?{' '}
-          <a href="https://nft.fyfy.io/docs/create-store/sell" target="_blank" rel="noreferrer">
+          <a href="https://nft.marketplace/docs/create-store/sell" target="_blank" rel="noreferrer">
             Read our creators’ guide.
           </a>
         </p>
@@ -939,7 +939,7 @@ const RoyaltiesStep = (props: {
         <label className="action-field">
           <span className="field-title">Royalty Percentage</span>
           <p>
-            This is how much of each secondary sale will be paid out to the 
+            This is how much of each secondary sale will be paid out to the
             creators.
           </p>
           <InputNumber
