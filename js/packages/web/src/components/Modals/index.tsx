@@ -2,16 +2,15 @@ import React from 'react';
 import { Modal } from 'antd';
 
 interface ModalProps {
-  children: JSX.Element,
-  isModalVisible?: boolean,
-  onClose: () => void,
+  children: JSX.Element;
+  isModalVisible?: boolean;
+  onClose: () => void;
 }
 
-export const ModalLayout: React.FC<ModalProps> = (
-  {
-    onClose,
-    isModalVisible,
-    children
+export const ModalLayout: React.FC<ModalProps> = ({
+  onClose,
+  isModalVisible,
+  children,
 }) => {
   return (
     <Modal
@@ -22,5 +21,5 @@ export const ModalLayout: React.FC<ModalProps> = (
     >
       {children}
     </Modal>
-  )
-}
+  );
+};
