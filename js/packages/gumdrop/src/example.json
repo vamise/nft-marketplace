@@ -1,10 +1,10 @@
 [
   {
-    "handle": "alice@fyfy.io",
+    "handle": "alice@solana.com",
     "amount": 1500000000
   },
   {
-    "handle": "bob@fyfy.io",
+    "handle": "bob@solana.com",
     "amount": 1500000000
   }
 ]
