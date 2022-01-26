@@ -9,6 +9,7 @@ import { StorageType } from '../storage-type';
 import { Keypair } from '@solana/web3.js';
 import { getType, getExtension } from 'mime';
 import { AssetKey } from '../../types';
+import { sleep } from '../various';
 import Transaction from 'arweave/node/lib/transaction';
 import Bundlr from '@bundlr-network/client';
 
@@ -94,7 +95,7 @@ const BUNDLE_SIZE_BYTE_LIMIT = 50 * 1024 * 1024;
 /**
  * Tags to include with every individual transaction.
  */
-const BASE_TAGS = [{ name: 'App-Name', value: 'NFT marketplace Candy Machine' }];
+const BASE_TAGS = [{ name: 'App-Name', value: 'Metaplex Candy Machine' }];
 
 const contentTypeTags = {
   json: { name: 'Content-Type', value: 'application/json' },
@@ -136,7 +137,7 @@ function sizeMB(bytes: number): string {
  * when accessing the transaction.
  * See:
  * - https://github.com/ArweaveTeam/arweave/blob/master/doc/path-manifest-schema.md
- * - https://github.com/vamise/nft-marketplace/pull/859#pullrequestreview-805914075
+ * - https://github.com/metaplex-foundation/metaplex/pull/859#pullrequestreview-805914075
  */
 function createArweavePathManifest(
   imageTxId: string,
@@ -327,7 +328,7 @@ async function processFiles({
       }),
     });
 
-    await (imageDataItem as BundlrTransaction).sign();
+    await (imageDataItem as unknown as BundlrTransaction).sign();
   } else if (storageType === StorageType.ArweaveBundle) {
     imageDataItem = await getImageDataItem(signer, imageBuffer, contentType);
 
@@ -347,7 +348,7 @@ async function processFiles({
       tags: manifestTags,
     });
 
-    await (manifestDataItem as BundlrTransaction).sign();
+    await (manifestDataItem as unknown as BundlrTransaction).sign();
   } else if (storageType === StorageType.ArweaveBundle) {
     manifestDataItem = getManifestDataItem(signer, manifest);
     await (manifestDataItem as DataItem).sign(signer);
@@ -365,7 +366,7 @@ async function processFiles({
       { tags: arweavePathManifestTags },
     );
 
-    await (arweavePathManifestDataItem as BundlrTransaction).sign();
+    await (arweavePathManifestDataItem as unknown as BundlrTransaction).sign();
     await arweavePathManifestDataItem.sign(signer);
   } else if (storageType === StorageType.ArweaveBundle) {
     arweavePathManifestDataItem = getArweavePathManifestDataItem(
@@ -482,9 +483,9 @@ export function* makeArweaveBundleUploadGenerator(
 
           acc.cacheKeys.push(filePair.key);
           acc.dataItems.push(
-            imageDataItem,
-            manifestDataItem,
-            arweavePathManifestDataItem,
+            imageDataItem as DataItem,
+            manifestDataItem as DataItem,
+            arweavePathManifestDataItem as DataItem,
           );
           acc.arweavePathManifestLinks.push(arweavePathManifestLink);
           acc.updatedManifests.push(manifest);
@@ -501,9 +502,11 @@ export function* makeArweaveBundleUploadGenerator(
       );
 
       if (storageType === StorageType.ArweaveSol) {
-        const bundlrTransactions = [...dataItems] as BundlrTransaction[];
+        const bundlrTransactions = [
+          ...dataItems,
+        ] as unknown as BundlrTransaction[];
         log.info('Uploading bundle via bundlr... in multiple transactions');
-        const bytes = (dataItems as BundlrTransaction[]).reduce(
+        const bytes = (dataItems as unknown as BundlrTransaction[]).reduce(
           (c, d) => c + d.data.length,
           0,
         );
@@ -511,8 +514,27 @@ export function* makeArweaveBundleUploadGenerator(
         log.info(`${cost.toNumber() / LAMPORTS} SOL to upload`);
         await bundlr.fund(cost.toNumber());
         for (const tx of bundlrTransactions) {
-          await tx.upload();
+          let attempts = 0;
+
+          const uploadTransaction = async () => {
+            await tx.upload().catch(async (err: Error) => {
+              attempts++;
+              if (attempts >= 3) {
+                throw err;
+              }
+
+              log.warn(
+                `Failed bundlr upload, automatically retrying transaction in 10s (attempt: ${attempts})`,
+                err,
+              );
+              await sleep(10 * 1000);
+              await uploadTransaction();
+            });
+          };
+
+          await uploadTransaction();
         }
+
         log.info('Bundle uploaded!');
       }
 

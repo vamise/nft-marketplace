@@ -14,7 +14,7 @@ programCommand('mint')
   .option('-u, --url <string>', 'metadata url')
   .option(
     '-c, --collection <string>',
-    'Optional: Set this NFT as a part of a collection, Note you must be update authority for this to work.',
+    'Optional: Set this NFT as a part of a collection, Note you must be updat authority for this to work.',
   )
   .option('-um, --use-method <string>', 'Optional: Single, Multiple, or Burn')
   .option('-tum, --total-uses <number>', 'Optional: Allowed Number of Uses')
@@ -48,7 +48,7 @@ programCommand('update-metadata')
   .option('-u, --url <string>', 'metadata url')
   .option(
     '-c, --collection <string>',
-    'Optional: Set this NFT as a part of a collection, Note you must be update authority for this to work.',
+    'Optional: Set this NFT as a part of a collection, Note you must be updat authority for this to work.',
   )
   .option('-um, --use-method <string>', 'Optional: Single, Multiple, or Burn')
   .option('-tum, --total-uses <number>', 'Optional: Allowed Number of Uses')
