@@ -1,119 +1,142 @@
-import React, { useMemo, useState } from 'react';
-import { shortenAddress, useMeta } from '@oyster/common';
-import { SwitchTransition, CSSTransition } from 'react-transition-group';
+import React, { ReactElement, useCallback, useState } from 'react';
+import { Modal } from 'antd';
+import { shortenAddress } from '@oyster/common';
 
-import { getCreator } from '../../../../../../components/PackCard/utils';
-import { ArtContent } from '../../../../../../components/ArtContent';
-import SmallLoader from '../../../../../../components/SmallLoader';
-import { usePack } from '../../../../contexts/PackContext';
-import useInterval from '../../../../../../hooks/useInterval';
+import InitialStep from './components/InitialStep';
+import TransactionApprovalStep from './components/TransactionApprovalStep';
+import { useArt } from '../../../../hooks';
+import { usePack } from '../../contexts/PackContext';
+import ClaimingStep from './components/ClaimingStep';
+import ClaimingError from './components/ClaimingStep/ClaimingError';
 
-import GhostCard from './components/GhostCard';
-import { CARDS_DISTANCE, INFO_MESSAGES } from './constants';
-import { useGhostCards } from './hooks/useGhostCards';
-import { CheckOutlined } from '@ant-design/icons';
-
-interface ClaimingStepProps {
+interface RedeemModalProps {
+  isModalVisible: boolean;
   onClose: () => void;
 }
 
-// Delay between switching cards on the slider
-const DELAY_BETWEEN_CARDS_CHANGE = 4000;
+enum openState {
+  Initial,
+  TransactionApproval,
+  Claiming,
+  Error,
+}
 
-const ClaimingStep: React.FC<ClaimingStepProps> = ({ onClose }) => {
-  const [currentCardIndex, setCurrentCardIndex] = useState<number>(-1);
+const RedeemModal = ({
+  isModalVisible,
+  onClose,
+}: RedeemModalProps): ReactElement => {
+  const {
+    handleOpenPack,
+    pack,
+    metadataByPackCard,
+    voucherMetadataKey,
+    provingProcess,
+    isLoading,
+  } = usePack();
+  const [modalState, setModalState] = useState<openState>(openState.Initial);
+  const [error, setError] = useState('');
 
-  const { pack, voucherMetadataKey, provingProcess, redeemModalMetadata } =
-    usePack();
-  const { whitelistedCreatorsByCreator } = useMeta();
-  const ghostCards = useGhostCards(currentCardIndex);
+  const numberOfNFTs = pack?.info?.packCards || 0;
+  const numberOfAttempts = pack?.info?.allowedAmountToRedeem || 0;
+  const shouldEnableRedeem =
+    process.env.NEXT_ENABLE_NFT_PACKS_REDEEM === 'true';
 
-  const { name = '', authority = '' } = pack?.info || {};
-  const { cardsRedeemed = 0, isExhausted = false } = provingProcess?.info || {};
-
-  const creator = useMemo(
-    () => getCreator(whitelistedCreatorsByCreator, authority),
-    [whitelistedCreatorsByCreator, authority],
+  const art = useArt(voucherMetadataKey);
+  const creators = (art.creators || []).map(
+    creator => creator.name || shortenAddress(creator.address || ''),
   );
 
-  const isClaiming = currentCardIndex < cardsRedeemed - 1 || !isExhausted;
-  const currentMetadataToShow =
-    currentCardIndex >= 0
-      ? redeemModalMetadata[currentCardIndex]
-      : voucherMetadataKey;
+  const handleOpen = async () => {
+    setModalState(openState.Claiming);
 
-  const titleText = isClaiming ? name : 'You Opened the Pack!';
-  const subtitleText = isClaiming
-    ? `From ${creator.name || shortenAddress(creator.address || '')}`
-    : `${cardsRedeemed} new Cards were added to your wallet`;
-  const footerText = isClaiming
-    ? `Retrieving ${currentCardIndex === -1 ? 'first' : 'next'} Card...`
-    : 'Pack Opening Succesful!';
-  const infoMessageText =
-    currentCardIndex === -1 ? INFO_MESSAGES[0] : INFO_MESSAGES[1];
+    try {
+      await handleOpenPack();
+    } catch (e: any) {
+      setModalState(openState.Error);
+      setError(e?.message || '');
+    }
+  };
 
-  useInterval(
-    () => {
-      // Checking if can proceed with showing the next card
-      if (currentCardIndex + 1 < cardsRedeemed) {
-        // Select the next card to show
-        setCurrentCardIndex(currentCardIndex + 1);
-      }
-    },
-    // Delay in milliseconds or null to stop it
-    isClaiming ? DELAY_BETWEEN_CARDS_CHANGE : null,
-  );
+  const handleClose = useCallback(() => {
+    onClose();
+    setModalState(openState.Initial);
+  }, [modalState, onClose, setModalState]);
+
+  const onClickOpen = useCallback(() => {
+    if (modalState === openState.Initial) {
+      return setModalState(openState.TransactionApproval);
+    }
+
+    handleOpen();
+  }, [modalState]);
+
+  const isModalClosable = modalState === openState.Initial;
+  const isClaiming = modalState === openState.Claiming;
+  const isClaimingError = modalState === openState.Error;
+  const isLoadingMetadata =
+    isLoading ||
+    Object.values(metadataByPackCard || {}).length !==
+      (pack?.info.packCards || 0);
 
   return (
-    <div className="claiming-step">
-      <span className="claiming-step__title">{titleText}</span>
-      <span className="claiming-step__subtitle">{subtitleText}</span>
-      <div className="claiming-step__cards-container">
-        <div
-          style={{ height: `${CARDS_DISTANCE * ghostCards.length}px` }}
-          className="claiming-step__ghost-cards"
-        >
-          {ghostCards.map((_, index) => (
-            <GhostCard key={index} index={index} />
-          ))}
-        </div>
-        <div className="current-card-container">
-          <SwitchTransition>
-            <CSSTransition
-              classNames="fade"
-              key={currentCardIndex}
-              addEndListener={(node, done) =>
-                node.addEventListener('transitionend', done, false)
-              }
-            >
-              <ArtContent
-                key={currentCardIndex}
-                pubkey={currentMetadataToShow}
-                preview={false}
+    <Modal
+      className="modal-redeem-wr"
+      centered
+      width={575}
+      mask={false}
+      visible={isModalVisible}
+      onCancel={handleClose}
+      footer={null}
+      closable={isModalClosable}
+      maskClosable={false}
+    >
+      <div className="modal-redeem">
+        {isClaiming && <ClaimingStep onClose={handleClose} />}
+        {!isClaiming && (
+          <>
+            {modalState === openState.Initial && (
+              <InitialStep
+                onClose={onClose}
+                metadataByPackCard={metadataByPackCard}
+                numberOfAttempts={numberOfAttempts}
+                numberOfNFTs={numberOfNFTs}
+                creators={creators}
+                isLoadingMetadata={isLoadingMetadata}
               />
-            </CSSTransition>
-          </SwitchTransition>
-        </div>
-      </div>
-      {isClaiming && (
-        <div className="claiming-step__notes">
-          <img src="wallet.svg" />
-          <span>{infoMessageText}</span>
-        </div>
-      )}
-      {!isClaiming && (
-        <button className="claiming-step__btn" onClick={onClose}>
-          <span>Close and view cards</span>
-        </button>
-      )}
-      <div className="claiming-step__footer">
-        {isClaiming && <SmallLoader />}
-        {!isClaiming && <CheckOutlined className="claiming-step__check" />}
+            )}
+            {modalState === openState.TransactionApproval && (
+              <TransactionApprovalStep
+                goBack={() => setModalState(openState.Initial)}
+              />
+            )}
+            {isClaimingError && (
+              <ClaimingError
+                onDismiss={() => setModalState(openState.Initial)}
+                error={error}
+              />
+            )}
+            {shouldEnableRedeem && !isClaimingError && (
+              <div className="modal-redeem__footer">
+                <p className="general-desc">
+                  Once opened, a Pack cannot be resealed.
+                </p>
 
-        {footerText}
+                <button
+                  className="modal-redeem__open-nft"
+                  disabled={isLoadingMetadata}
+                  onClick={onClickOpen}
+                >
+                  <span>
+                    {provingProcess ? 'Resume Opening Pack' : 'Open Pack'}
+                  </span>
+                </button>
+              </div>
+            )}
+          </>
+        )}
       </div>
-    </div>
+    </Modal>
   );
 };
 
-export default ClaimingStep;
+export default RedeemModal;
