@@ -299,7 +299,7 @@ programCommand('withdraw')
               cpf,
             );
             log.info(
-              `${cg.pubkey} has been withdrawn. \nTransaction Signature: ${tx}`,
+              `${cg.pubkey} has been withdrawn. \nTransaction Signarure: ${tx}`,
             );
           }
         } catch (e) {
@@ -986,7 +986,7 @@ function deprecationWarning() {
       'Candy Machine V1 has been deprecated and new instances can no longer be created.\n' +
         'Although, you can still update existing V1 Candy Machines.\n\n' +
         'You must use Candy Machine V2 to create a new instance of a Candy Machine.\n' +
-        'For more information about this change, visit https://nft.fyfy.io/docs.\n',
+        'For more information about this change, visit https://docs.metaplex.com.\n',
     ),
   );
 }

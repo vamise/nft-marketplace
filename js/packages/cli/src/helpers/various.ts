@@ -17,7 +17,6 @@ export async function getCandyMachineV2Config(
   configPath: any,
 ): Promise<{
   storage: StorageType;
-  nftStorageKey: string;
   ipfsInfuraProjectId: string;
   number: number;
   ipfsInfuraSecret: string;
@@ -58,7 +57,6 @@ export async function getCandyMachineV2Config(
 
   const {
     storage,
-    nftStorageKey,
     ipfsInfuraProjectId,
     number,
     ipfsInfuraSecret,
@@ -187,7 +185,6 @@ export async function getCandyMachineV2Config(
 
   return {
     storage,
-    nftStorageKey,
     ipfsInfuraProjectId,
     number,
     ipfsInfuraSecret,

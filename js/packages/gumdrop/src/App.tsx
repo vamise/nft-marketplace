@@ -41,7 +41,7 @@ const About = () => {
       Simultaneously, capitalization of these assets should not incur undue
       costs or operational overhead to the creators. There are several ways to
       achieve such a setup and Gumdrop offers one that integrates with existing
-      Solana and Fyfy ecosystem programs.
+      Solana and Fyfy NFT ecosystem programs.
       </div>
 
       <div>
@@ -87,7 +87,7 @@ const About = () => {
 
       See a full explanation on the{" "}
       <HyperLink
-        href="https://nft.fyfy.io/docs/airdrops/create-gumdrop"
+        href="https://docs.metaplex.com/airdrops/create-gumdrop"
         underline="none"
       >
         metaplex docs

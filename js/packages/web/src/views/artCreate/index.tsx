@@ -244,7 +244,7 @@ const CategoryStep = (props: {
         <p>
           First time creating on NFT marketplace?{' '}
           <a
-            href="https://nft.marketplace/docs/create-store/sell"
+            href="https://nft.fyfy.io/docs/create-store/sell"
             target="_blank"
             rel="noreferrer"
           >
@@ -745,19 +745,28 @@ const InfoStep = (props: {
             <Form.List name="attributes">
               {(fields, { add, remove }) => (
                 <>
-                  {fields.map(({ key, name }) => (
+                  {fields.map(({ key, name, fieldKey }) => (
                     <Space key={key} align="baseline">
-                      <Form.Item name={[name, 'trait_type']} hasFeedback>
+                      <Form.Item
+                        name={[name, 'trait_type']}
+                        fieldKey={[fieldKey, 'trait_type']}
+                        hasFeedback
+                      >
                         <Input placeholder="trait_type (Optional)" />
                       </Form.Item>
                       <Form.Item
                         name={[name, 'value']}
+                        fieldKey={[fieldKey, 'value']}
                         rules={[{ required: true, message: 'Missing value' }]}
                         hasFeedback
                       >
                         <Input placeholder="value" />
                       </Form.Item>
-                      <Form.Item name={[name, 'display_type']} hasFeedback>
+                      <Form.Item
+                        name={[name, 'display_type']}
+                        fieldKey={[fieldKey, 'display_type']}
+                        hasFeedback
+                      >
                         <Input placeholder="display_type (Optional)" />
                       </Form.Item>
                       <MinusCircleOutlined onClick={() => remove(name)} />
@@ -1280,13 +1289,13 @@ const Congrats = (props: {
 
   const newTweetURL = () => {
     const params = {
-      text: "I've created a new NFT artwork on marketplace, check it out!",
+      text: "I've created a new NFT artwork on NFT marketplace, check it out!",
       url: `${
         window.location.origin
       }/#/art/${props.nft?.metadataAccount.toString()}`,
-      hashtags: 'NFT,Crypto,Metaplex',
-      // via: "Metaplex",
-      related: 'Metaplex,Solana',
+      hashtags: 'NFT,Crypto,NFT marketplace',
+      // via: "NFT marketplace",
+      related: 'NFT marketplace,Solana',
     };
     const queryParams = new URLSearchParams(params).toString();
     return `https://twitter.com/intent/tweet?${queryParams}`;
