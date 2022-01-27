@@ -41,7 +41,7 @@ const About = () => {
       Simultaneously, capitalization of these assets should not incur undue
       costs or operational overhead to the creators. There are several ways to
       achieve such a setup and Gumdrop offers one that integrates with existing
-      Solana and Fyfy NFT ecosystem programs.
+      Solana and Metaplex ecosystem programs.
       </div>
 
       <div>
