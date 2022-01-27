@@ -33,7 +33,7 @@ export const SalesListView = () => {
       <Banner
         src="/main-banner.png"
         headingText="Distributed Marketplace"
-        subHeadingText="The NFT marketplace is an online service for the trading of NFTs. It is comparable to an e-commerce website where you can use digital wallets to buy items. Marketplaces use Solana blockchain, have different integrations with exchanges and be specialized in different kinds of assets."
+        subHeadingText="The NFT marketplace is an online service for the trading of NFTs. It is comparable to an commerce website where you can use digital wallets to buy items. NFT marketplace use Solana blockchain, have different integrations with exchange and be specialized in different kinds of assets."
         actionComponent={<HowToBuyModal buttonClassName="secondary-btn" />}
         useBannerBg
       />
