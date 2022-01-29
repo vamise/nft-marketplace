@@ -10,7 +10,7 @@ export const CTAButton = styled(Button)`
   height: 60px;
   margin-top: 10px;
   margin-bottom: 5px;
-  background: linear-gradient(180deg, #604ae5 0%, #813eee 100%);
+  background: linear-gradient(180deg, #2b7df0 0%, #1b67d1 100%);
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -42,6 +42,8 @@ export const MintButton = ({
       return <CircularProgress />;
     } else if (candyMachine?.state.isPresale) {
       return 'PRESALE MINT';
+    } else if (clicked && candyMachine?.state.gatekeeper) {
+      return <CircularProgress />;
     }
 
     return 'MINT';
@@ -50,6 +52,7 @@ export const MintButton = ({
   return (
     <CTAButton
       disabled={
+        clicked ||
         candyMachine?.state.isSoldOut ||
         isMinting ||
         !candyMachine?.state.isActive
