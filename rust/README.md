@@ -45,7 +45,7 @@ inside the [deprecated contracts repository][deprecated].
 
 ## What are the Future Plans for this Repository?
  
-In the near future the [nft marketplace repository][nft marketpalce] will become an example
+In the near future the [NFT marketplace repository][nft marketplace] will become an example
 of how to use the SDK provided by the [nft-marketplace-program-library][mpl] in order to build
 applications with NFT marketplace.
 

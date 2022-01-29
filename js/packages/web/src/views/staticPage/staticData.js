@@ -1,6 +1,6 @@
 export const data = {
   headContent: {
-    title: 'We are NFT marketplace',
+    title: 'FYFY // NFT marketplace',
     subtitle: 'About Us',
     bannerImage: '/main-banner.png',
   },
