@@ -1,20 +1,43 @@
----
 name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
-
----
-
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
-
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
-
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+description: Request a new feature
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Which package is this feature request for?
+      options:
+        - storefront
+        - candy machine ui
+        - candy machine cli
+        - other cli
+        - gumdrop
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature
+      description: A clear and concise description of what the problem is, or what feature you want to be implemented.
+      placeholder: I'm always frustrated when..., A good addition would be...
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Ideal solution or implementation
+      description: A clear and concise description of what you want to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative solutions or implementations
+      description: A clear and concise description of any alternative solutions or features you have considered.
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Other context
+      description: Any other context, screenshots, or file uploads that help us understand your feature request.
