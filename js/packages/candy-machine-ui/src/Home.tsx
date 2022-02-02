@@ -25,7 +25,7 @@ const ConnectButton = styled(WalletDialogButton)`
   height: 60px;
   margin-top: 10px;
   margin-bottom: 5px;
-  background: linear-gradient(180deg, #2b7df0 0%, #1b67d1 100%);
+  background: linear-gradient(180deg, #604ae5 0%, #813eee 100%);
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -82,6 +82,7 @@ const Home = (props: HomeProps) => {
           props.candyMachineId,
           props.connection,
         );
+        console.log(JSON.stringify(cndy.state, null, 4));
         setCandyMachine(cndy);
       } catch (e) {
         console.log('There was a problem fetching Candy Machine state');
