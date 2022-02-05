@@ -44,6 +44,7 @@ import { withdrawV2 } from './commands/withdraw';
 import { updateFromCache } from './commands/updateFromCache';
 import { StorageType } from './helpers/storage-type';
 import { getType } from 'mime';
+import { escapeRegExp } from 'lodash';
 program.version('0.0.2');
 const supportedImageTypes = {
   'image/png': 1,
@@ -387,7 +388,7 @@ programCommand('verify_upload')
           const name = fromUTF8Array([...thisSlice.slice(2, 34)]);
           const uri = fromUTF8Array([...thisSlice.slice(40, 240)]);
           const cacheItem = cacheContent.items[key];
-          if (!name.match(cacheItem.name) || !uri.match(cacheItem.link)) {
+          if (!name.match(escapeRegExp(cacheItem.name)) || !uri.match(escapeRegExp(cacheItem.link))) {
             //leaving here for debugging reasons, but it's pretty useless. if the first upload fails - all others are wrong
             /*log.info(
                 `Name (${name}) or uri (${uri}) didnt match cache values of (${cacheItem.name})` +
@@ -505,8 +506,12 @@ programCommand('show')
       const machine = await anchorProgram.account.candyMachine.fetch(
         cacheContent.program.candyMachine,
       );
+      const [candyMachineAddr] = await deriveCandyMachineV2ProgramAddress(
+        new PublicKey(cacheContent.program.candyMachine),
+      );
       log.info('...Candy Machine...');
       log.info('Key:', cacheContent.program.candyMachine);
+      log.info('1st creator :', candyMachineAddr.toBase58());
       //@ts-ignore
       log.info('authority: ', machine.authority.toBase58());
       //@ts-ignore
