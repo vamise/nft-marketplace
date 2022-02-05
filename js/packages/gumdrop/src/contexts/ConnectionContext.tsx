@@ -35,7 +35,7 @@ export const ENDPOINTS = [
   },
   {
     name: "devnet" as ENV,
-    endpoint: "https://api.devnet.solana.com",
+    endpoint: "http://api.devnet.metaplex.rpcpool.com/",
     ChainId: ChainId.Devnet,
   },
 ];
@@ -153,7 +153,7 @@ export const getErrorForTransaction = async (
   connection: Connection,
   txid: string
 ) => {
-  // wait for all confirmation before getting transaction
+  // wait for all confirmation before geting transaction
   await connection.confirmTransaction(txid, "max");
 
   const tx = await connection.getParsedConfirmedTransaction(txid);
