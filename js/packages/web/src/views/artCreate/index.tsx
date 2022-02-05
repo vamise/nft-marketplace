@@ -66,9 +66,8 @@ export const ArtCreateView = () => {
   const [step, setStep] = useState<number>(0);
   const [stepsVisible, setStepsVisible] = useState<boolean>(true);
   const [isMinting, setMinting] = useState<boolean>(false);
-  const [nft, setNft] = useState<
-    { metadataAccount: StringPublicKey } | undefined
-  >(undefined);
+  const [nft, setNft] =
+    useState<{ metadataAccount: StringPublicKey } | undefined>(undefined);
   const [files, setFiles] = useState<File[]>([]);
   const [attributes, setAttributes] = useState<IMetadataExtension>({
     name: '',
@@ -243,11 +242,7 @@ const CategoryStep = (props: {
         <h2>Create a new item</h2>
         <p>
           First time creating on NFT marketplace?{' '}
-          <a
-            href="https://marketplace.fyfy.io/docs/create-store/sell"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://nft.fyfy.io/docs/storefront/create" target="_blank" rel="noreferrer">
             Read our creators’ guide.
           </a>
         </p>
@@ -558,11 +553,8 @@ const UploadStep = (props: {
                   : mainFile && mainFile.name,
             });
             const url = await fetch(customURL).then(res => res.blob());
-            const files = [
-              coverFile,
-              mainFile,
-              customURL ? new File([url], customURL) : '',
-            ].filter(f => f) as File[];
+            const files = [coverFile, mainFile, customURL ? new File([url], customURL) : '']
+              .filter(f => f) as File[];
 
             props.setFiles(files);
             props.confirm();
@@ -747,7 +739,10 @@ const InfoStep = (props: {
                 <>
                   {fields.map(({ key, name }) => (
                     <Space key={key} align="baseline">
-                      <Form.Item name={[name, 'trait_type']} hasFeedback>
+                      <Form.Item
+                        name={[name, 'trait_type']}
+                        hasFeedback
+                      >
                         <Input placeholder="trait_type (Optional)" />
                       </Form.Item>
                       <Form.Item
@@ -757,7 +752,10 @@ const InfoStep = (props: {
                       >
                         <Input placeholder="value" />
                       </Form.Item>
-                      <Form.Item name={[name, 'display_type']} hasFeedback>
+                      <Form.Item
+                        name={[name, 'display_type']}
+                        hasFeedback
+                      >
                         <Input placeholder="display_type (Optional)" />
                       </Form.Item>
                       <MinusCircleOutlined onClick={() => remove(name)} />
@@ -1280,7 +1278,7 @@ const Congrats = (props: {
 
   const newTweetURL = () => {
     const params = {
-      text: "I've created a new NFT artwork on Metaplex, check it out!",
+      text: "I've created a new NFT artwork on marketplace, check it out!",
       url: `${
         window.location.origin
       }/#/art/${props.nft?.metadataAccount.toString()}`,
