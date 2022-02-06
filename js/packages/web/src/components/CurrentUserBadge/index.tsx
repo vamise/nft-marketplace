@@ -119,7 +119,7 @@ const AddFundsModal = (props: {
         <div
           style={{
             width: '100%',
-            background: '#000e1a',
+            background: '#242424',
             borderRadius: 12,
             marginBottom: 10,
             height: 50,
@@ -154,7 +154,7 @@ const AddFundsModal = (props: {
         <Button
           onClick={() => props.setShowAddFundsModal(false)}
           style={{
-            background: '#454545',
+            background: '#002438',
             borderRadius: 14,
             width: '30%',
             padding: 10,
@@ -209,13 +209,14 @@ export const CurrentUserBadge = (props: {
   const { account } = useNativeAccount();
   const solPrice = useSolPrice();
   const [showAddFundsModal, setShowAddFundsModal] = useState<Boolean>(false);
+  const tokenList = useTokenList();
 
   if (!wallet || !publicKey) {
     return null;
   }
   const balance = (account?.lamports || 0) / LAMPORTS_PER_SOL;
   const balanceInUSD = balance * solPrice;
-  const solMintInfo = useTokenList().tokenMap.get(WRAPPED_SOL_MINT.toString());
+  const solMintInfo = tokenList.tokenMap.get(WRAPPED_SOL_MINT.toString());
   const iconStyle: React.CSSProperties = {
     display: 'flex',
     width: props.iconSize,
