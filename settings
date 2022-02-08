@@ -1,0 +1,4 @@
+
+
+
+ts-node ~/nft-marketplace/js/packages/cli/src/candy-machine-v2-cli.ts --version
