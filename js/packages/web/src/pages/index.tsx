@@ -10,5 +10,3 @@ function App() {
 }
 
 export default App;
-© 2022 GitHub, Inc.
-Terms
