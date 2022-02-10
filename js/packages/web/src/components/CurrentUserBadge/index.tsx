@@ -30,7 +30,7 @@ const btnStyle: React.CSSProperties = {
 };
 
 const UserActions = (props: { mobile?: boolean; onClick?: any }) => {
-  const { wallet, publicKey } = useWallet();
+  const { publicKey } = useWallet();
   const { whitelistedCreatorsByCreator, store } = useMeta();
   const pubkey = publicKey?.toBase58() || '';
 
@@ -154,7 +154,7 @@ const AddFundsModal = (props: {
         <Button
           onClick={() => props.setShowAddFundsModal(false)}
           style={{
-            background: '#002438',
+            background: '#454545',
             borderRadius: 14,
             width: '30%',
             padding: 10,

@@ -23,7 +23,8 @@ const DiscordButton = () => (
   <a
     className={'discord-button'}
     target={'_blank'}
-    href={'https://discord.com/invite/metaplex'}
+    href={'https://discord.com/mFHvP2e8'}
+    rel="noreferrer"
   >
     <span></span> Join our Discord
   </a>

@@ -63,7 +63,6 @@ import { useActionButtonContent } from './hooks/useActionButtonContent';
 import { endSale } from './utils/endSale';
 import { useInstantSaleState } from './hooks/useInstantSaleState';
 import { useTokenList } from '../../contexts/tokenList';
-import { FundsIssueModal } from '../FundsIssueModal';
 import CongratulationsModal from '../Modals/CongratulationsModal';
 
 async function calculateTotalCostOfRedeemingOtherPeoplesBids(
@@ -231,7 +230,6 @@ export const AuctionCard = ({
   const [showBidPlaced, setShowBidPlaced] = useState<boolean>(false);
   const [showPlaceBid, setShowPlaceBid] = useState<boolean>(false);
   const [lastBid, setLastBid] = useState<{ amount: BN } | undefined>(undefined);
-  const [showFundsIssueModal, setShowFundsIssueModal] = useState(false);
   const [isOpenPurchase, setIsOpenPurchase] = useState<boolean>(false);
   const [isOpenClaim, setIsOpenClaim] = useState<boolean>(false);
 
@@ -242,7 +240,7 @@ export const AuctionCard = ({
 
   const mintKey = auctionView.auction.info.tokenMint;
   const balance = useUserBalance(mintKey);
-  const tokenInfo = useTokenList().mainnetTokens.filter(
+  const tokenInfo = useTokenList().subscribedTokens.filter(
     m => m.address == mintKey,
   )[0];
   const symbol = tokenInfo
@@ -377,7 +375,6 @@ export const AuctionCard = ({
       isNotEnoughLamports &&
       !(canClaimPurchasedItem || canClaimItem || canEndInstantSale)
     ) {
-      setShowFundsIssueModal(true);
       return;
     }
 
@@ -702,7 +699,7 @@ export const AuctionCard = ({
                 <div
                   style={{
                     width: '100%',
-                    background: '#000e1a',
+                    background: '#000e24',
                     borderRadius: 14,
                     color: 'rgba(0, 0, 0, 0.5)',
                   }}

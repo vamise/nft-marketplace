@@ -96,15 +96,20 @@ export const Footer = () => {
             <div className="sub-header">
               {LABELS.STORE_NAME} NFT Marketplace
             </div>
-            <div className="footer-link">Powered by Fyfy and Solana</div>
+            <div className="footer-link">Powered by Metaplex and Solana</div>
           </div>
         ) : null}
-        {footerConf.components.map(component => (
-          <div className="footer-section-container">
+        {footerConf.components.map((component, ii) => (
+          <div className="footer-section-container" key={ii}>
             <div className="sub-header">{component.title}</div>
-            {component.links.map(link => (
-              <div className="body-text">
-                <a href={link.url} target="_blank" className="footer-link">
+            {component.links.map((link, jj) => (
+              <div className="body-text" key={jj}>
+                <a
+                  className="footer-link"
+                  href={link.url}
+                  rel="noreferrer"
+                  target="_blank"
+                >
                   {link.label}
                 </a>
               </div>
@@ -122,7 +127,7 @@ export const Footer = () => {
       </div>
       <div className="footer-foot">
         <div className="small-body footer-link">
-          © 2021 {LABELS.STORE_NAME}, All rights reserved
+          © 2022 {LABELS.STORE_NAME} / FYFY.IO. All Rights Reserved
         </div>
       </div>
     </div>
