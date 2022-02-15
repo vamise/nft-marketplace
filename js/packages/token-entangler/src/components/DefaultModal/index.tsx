@@ -8,7 +8,7 @@ export const DefaultModal = (props: any) => {
 
   return (
     <Modal
-      style={{ background: 'transparent', borderRadius: 16 }}
+      style={{ background: 'transparent', borderRadius: 15 }}
       bodyStyle={{
         background: '#000c1a',
         display: 'flex',

@@ -331,7 +331,7 @@ programCommand('withdraw')
         return;
       }
       log.info(
-        `Congratulations, ${candyMachineId} has been successfully drained! Please consider support Open Source developers`,
+        `Congratulations, ${candyMachineId} has been successfuly drained! Please consider support Open Source developers`,
       );
     }
   });
@@ -590,7 +590,7 @@ programCommand('verify_price')
     log.info(`Candymachine price is: ${candyMachineLamports}`);
 
     if (lamports != candyMachineLamports) {
-      throw new Error(`Expected price and Candy Machine's price do not match!`);
+      throw new Error(`Expected price and CandyMachine's price do not match!`);
     }
 
     log.info(`Good to go!`);

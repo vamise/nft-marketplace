@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useMemo,
-  useCallback,
-  useRef,
-} from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import {
   Divider,
   Steps,
@@ -48,7 +42,6 @@ import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { MintInfo, MintLayout } from '@solana/spl-token';
 import { useHistory, useParams } from 'react-router-dom';
-import { capitalize } from 'lodash';
 import {
   WinningConfigType,
   AmountRange,
@@ -65,10 +58,8 @@ import { AmountLabel } from '../../components/AmountLabel';
 import { useMeta } from '../../contexts';
 import useWindowDimensions from '../../utils/layout';
 import { PlusCircleOutlined } from '@ant-design/icons';
-import { SystemProgram } from '@solana/web3.js';
 import TokenDialog, { TokenButton } from '../../components/TokenDialog';
 import { useTokenList } from '../../contexts/tokenList';
-import { mintTo } from '@project-serum/serum/lib/token-instructions';
 import { TokenInfo } from '@solana/spl-token-registry';
 import { FundsIssueModal } from '../../components/FundsIssueModal';
 
@@ -192,10 +183,6 @@ export const AuctionCreateView = () => {
     items: [],
     tiers: [],
   });
-  const [quoteMintAddress, setQuoteMintAddress] = useState<string>();
-  const [quoteMintInfo, setQuoteMintInfo] = useState<MintInfo>();
-  const [quoteMintInfoExtended, setQuoteMintInfoExtended] =
-    useState<TokenInfo>();
 
   useEffect(() => {
     if (step_param) setStep(parseInt(step_param));
@@ -232,11 +219,7 @@ export const AuctionCreateView = () => {
       if (items.length > 0) {
         const item = items[0];
         if (!editions) {
-          item.winningConfigType =
-            item.metadata.info.updateAuthority ===
-            (wallet?.publicKey || SystemProgram.programId).toBase58()
-              ? WinningConfigType.FullRightsTransfer
-              : WinningConfigType.TokenOnlyTransfer;
+          item.winningConfigType = WinningConfigType.TokenOnlyTransfer;
         }
 
         item.amountRanges = [
@@ -274,11 +257,7 @@ export const AuctionCreateView = () => {
           attributes.category == AuctionCategory.Single &&
           item.masterEdition
         ) {
-          item.winningConfigType =
-            item.metadata.info.updateAuthority ===
-            (wallet?.publicKey || SystemProgram.programId).toBase58()
-              ? WinningConfigType.FullRightsTransfer
-              : WinningConfigType.TokenOnlyTransfer;
+          item.winningConfigType = WinningConfigType.TokenOnlyTransfer;
         }
         item.amountRanges = [
           new AmountRange({
@@ -314,7 +293,7 @@ export const AuctionCreateView = () => {
             i => (i as TierDummyEntry).winningConfigType !== undefined,
           )),
       );
-      let filteredTiers = tiers.filter(
+      const filteredTiers = tiers.filter(
         i => i.items.length > 0 && i.winningSpots.length > 0,
       );
 
@@ -360,7 +339,7 @@ export const AuctionCreateView = () => {
             });
             // Ok now we have combined ranges from this tier range. Now we merge them into the ranges
             // at the top level.
-            let oldRanges = ranges;
+            const oldRanges = ranges;
             ranges = [];
             let oldRangeCtr = 0,
               tierRangeCtr = 0;
@@ -729,8 +708,7 @@ const CategoryStep = (props: {
       <Row className="call-to-action">
         <h2>List an item</h2>
         <p>
-          First time listing on FYFY´s NFT marketplace?{' '}
-          <a>Read our sellers' guide.</a>
+          First time listing on NFT marketplace? <a>Read our sellers&apos; guide.</a>
         </p>
       </Row>
       <Row justify={width < 768 ? 'center' : 'start'}>
@@ -989,12 +967,7 @@ const CopiesStep = (props: {
 }) => {
   const [showTokenDialog, setShowTokenDialog] = useState(false);
   const [mint, setMint] = useState<PublicKey>(WRAPPED_SOL_MINT);
-  const { hasOtherTokens, tokenMap } = useTokenList();
-
-  // give default value to mint
-  const mintInfo = tokenMap.get(
-    !mint ? QUOTE_MINT.toString() : mint.toString(),
-  );
+  const { hasOtherTokens } = useTokenList();
 
   props.attributes.quoteMintAddress = mint
     ? mint.toBase58()
@@ -1009,10 +982,9 @@ const CopiesStep = (props: {
     )!;
   }
 
-  let artistFilter = (i: SafetyDepositDraft) =>
+  const artistFilter = (i: SafetyDepositDraft) =>
     !(i.metadata.info.data.creators || []).find((c: Creator) => !c.verified);
-  let filter: (i: SafetyDepositDraft) => boolean = (i: SafetyDepositDraft) =>
-    true;
+  let filter: (i: SafetyDepositDraft) => boolean = () => true;
   if (props.attributes.category === AuctionCategory.Limited) {
     filter = (i: SafetyDepositDraft) =>
       !!i.masterEdition && !!i.masterEdition.info.maxSupply;
@@ -1025,7 +997,7 @@ const CopiesStep = (props: {
       );
   }
 
-  let overallFilter = (i: SafetyDepositDraft) => filter(i) && artistFilter(i);
+  const overallFilter = (i: SafetyDepositDraft) => filter(i) && artistFilter(i);
 
   return (
     <>
@@ -1110,12 +1082,7 @@ const NumberOfWinnersStep = (props: {
 }) => {
   const [showTokenDialog, setShowTokenDialog] = useState(false);
   const [mint, setMint] = useState<PublicKey>(WRAPPED_SOL_MINT);
-  const { hasOtherTokens, tokenMap } = useTokenList();
-
-  // give default value to mint
-  const mintInfo = tokenMap.get(
-    !mint ? QUOTE_MINT.toString() : mint.toString(),
-  );
+  const { hasOtherTokens } = useTokenList();
 
   props.attributes.quoteMintAddress = mint
     ? mint.toBase58()
@@ -1216,6 +1183,7 @@ const PriceAuction = (props: {
             <a
               href={`https://explorer.solana.com/address/${props.attributes?.quoteMintAddress}`}
               target="_blank"
+              rel="noreferrer"
             >
               {' '}
               {props.attributes?.quoteMintAddress !=
@@ -1631,7 +1599,7 @@ const TierTableStep = (props: {
       winningSpots: [...wc.winningSpots],
     }));
   };
-  let artistFilter = (i: SafetyDepositDraft) =>
+  const artistFilter = (i: SafetyDepositDraft) =>
     !(i.metadata.info.data.creators || []).find((c: Creator) => !c.verified);
   const options: { label: string; value: number }[] = [];
   for (let i = 0; i < props.maxWinners; i++) {
@@ -1991,6 +1959,7 @@ const ReviewStep = (props: {
   const [cost, setCost] = useState(0);
   const { account } = useNativeAccount();
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const rentCall = Promise.all([
       props.connection.getMinimumBalanceForRentExemption(MintLayout.span),
       props.connection.getMinimumBalanceForRentExemption(MAX_METADATA_LEN),
@@ -2000,7 +1969,7 @@ const ReviewStep = (props: {
 
   const balance = (account?.lamports || 0) / LAMPORTS_PER_SOL;
 
-  let item = props.attributes.items?.[0];
+  const item = props.attributes.items?.[0];
 
   const handleConfirm = () => {
     props.setAttributes({
@@ -2164,7 +2133,7 @@ const Congrats = (props: {
         window.location.origin
       }/#/auction/${props.auction?.auction.toString()}`,
       hashtags: 'NFT,Crypto,Fyfy',
-      // via: "Marketplace",
+      // via: "Fyfy",
       related: 'Fyfy,Solana',
     };
     const queryParams = new URLSearchParams(params).toString();
@@ -2187,7 +2156,7 @@ const Congrats = (props: {
         <div className="congrats-button-container">
           <Button
             className="metaplex-button"
-            onClick={_ => window.open(newTweetURL(), '_blank')}
+            onClick={() => window.open(newTweetURL(), '_blank')}
           >
             <span>Share it on Twitter</span>
             <span>&gt;</span>

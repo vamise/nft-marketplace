@@ -271,4 +271,4 @@ export const ArtMinting = ({ id, onMint }: ArtMintingProps) => {
       )}
     </>
   );
-};
+}

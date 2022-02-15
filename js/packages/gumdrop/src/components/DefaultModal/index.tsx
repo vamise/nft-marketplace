@@ -8,9 +8,9 @@ export const DefaultModal = (props: any) => {
 
   return (
     <Modal
-      style={{ background: 'transparent', borderRadius: 16 }}
+      style={{ background: 'transparent', borderRadius: 15 }}
       bodyStyle={{
-        background: '#000c1a',
+        background: '#000C1A',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

@@ -242,9 +242,9 @@ const CategoryStep = (props: {
       <Row className="call-to-action">
         <h2>Create a new item</h2>
         <p>
-          First time creating on Metaplex?{' '}
+          First time creating on NFT marketplace?{' '}
           <a
-            href="https://docs.metaplex.com/storefront/create"
+            href="https://nft.fyfy.io/docs/storefront/create"
             target="_blank"
             rel="noreferrer"
           >
